@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -24,14 +25,33 @@ class _CameraPageState extends State<CameraPage> {
       final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.camera);
 
       if (pickedFile != null) {
+        _saveImage(pickedFile.path);
+
         setState(() {
           _imageFile = pickedFile;
         });
-        // If you want to do something with the image file, you can use the 'pickedFile'
+
         print('Image Path: ${pickedFile.path}');
       }
     } catch (e) {
       print('Error taking picture: $e');
+    }
+  }
+
+  Future<void> _saveImage(String imagePath) async {
+    try {
+      final Directory appDir = await getApplicationDocumentsDirectory();
+      final String appDirPath = appDir.path;
+
+      final String fileName = 'imagetake .png'; // You can customize the file name
+      final String filePath = '$appDirPath/$fileName';
+
+      // Copy the file to the app's document directory
+      await File(imagePath).copy(filePath);
+
+      print('Image saved to: $filePath');
+    } catch (e) {
+      print('Error saving image: $e');
     }
   }
 
