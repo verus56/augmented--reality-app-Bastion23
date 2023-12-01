@@ -37,9 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_staggered_grid_view: ^0.4.1
   flutter_screenutil: ^5.6.1
-  audioplayers: ^0.20.1
+  just_audio: ^0.9.13 
+
   camera: ^0.10.5+5
-  image_picker: ^0.8.4
+  image_picker: ^1.0.4
 
 
 dev_dependencies:
@@ -51,7 +52,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,7 +67,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/music/senya.mp3
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
