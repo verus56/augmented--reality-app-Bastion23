@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+
 
 import '../utils/colors.dart';
 
@@ -12,18 +12,15 @@ class DetailWallpaper extends StatefulWidget {
 }
 
 class _DetailWallpaperState extends State<DetailWallpaper> {
-  late AudioPlayer _audioPlayer;
+ 
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
-    _playBackgroundMusic();
+   
   }
 
-  _playBackgroundMusic() async {
-    await _audioPlayer.play('assets/music/senya.mp3', isLocal: true);
-  }
+  
 
   verify() {
     setState(() {
@@ -193,7 +190,7 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+   
     super.dispose();
   }
 }
