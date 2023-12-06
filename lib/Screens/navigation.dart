@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/camerapage.dart';
-
+import 'art.dart';
 import '../utils/colors.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -95,8 +95,9 @@ class _NavigationPageState extends State<NavigationPage> {
               children: <Widget>[
                 HomePage(),
                 page("Favorite Page"),
+                page("vidoe  Page"),
+                art(),
                 CameraPage(),
-                page("Settings Page"),
               ],
             ),
             // Bottom Navigation
@@ -123,8 +124,9 @@ class _NavigationPageState extends State<NavigationPage> {
                         BottomNavigationBarItem(
                           icon: Icon(Icons.favorite),
                         ),
+                        BottomNavigationBarItem(icon: Icon(Icons.video_stable)),
+                        BottomNavigationBarItem(icon: Icon(Icons.now_wallpaper)),
                         BottomNavigationBarItem(icon: Icon(Icons.camera)),
-                        BottomNavigationBarItem(icon: Icon(Icons.settings)),
                       ]),
                 ),
               ),

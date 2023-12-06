@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'Screens/home_page.dart';
 import 'Screens/welcome.dart';
+import 'introduction_animation/introduction_animation_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'AR App',
-        home: WelcomeScreen(),
+        home: IntroductionAnimationScreen(),
       ),
       designSize: const Size(390, 844),
     );
