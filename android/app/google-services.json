@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1061734117946",
+    "project_id": "arapp-aab91",
+    "storage_bucket": "arapp-aab91.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061734117946:android:8b9b12ffe8cedad530bb03",
+        "android_client_info": {
+          "package_name": "com.Bastion.ar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE45Yyd3qkrAnUJ0IJCjIhVjO8yVdXRkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

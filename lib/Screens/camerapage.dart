@@ -43,7 +43,7 @@ class _CameraPageState extends State<CameraPage> {
       final Directory appDir = await getApplicationDocumentsDirectory();
       final String appDirPath = appDir.path;
 
-      final String fileName = 'imagetake .png'; // You can customize the file name
+      final String fileName = 'imagetake.png'; // You can customize the file name
       final String filePath = '$appDirPath/$fileName';
 
       // Copy the file to the app's document directory
