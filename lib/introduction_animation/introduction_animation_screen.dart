@@ -123,6 +123,7 @@ class _IntroductionAnimationScreenState
     }
   }
 
+
  void _signUpClick() {
   Navigator.push(
     context,
@@ -132,4 +133,5 @@ class _IntroductionAnimationScreenState
   );
 }
 
-}
+
+ 
