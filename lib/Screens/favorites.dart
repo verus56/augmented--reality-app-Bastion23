@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -49,18 +50,28 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     child: Text('No favorites yet'),
                   );
                 } else {
-                  // Display the list of favorite images
-                  return ListView.builder(
+                  // Display the list of favorite images using StaggeredGridView
+                  return StaggeredGridView.countBuilder(
+                    crossAxisCount: 2,
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       // Extract the imageUrl from the document
-         
-Map<String, dynamic> data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-String imageUrl = data['imageUrl'] as String;
+                      Map<String, dynamic> data = snapshot.data!.docs[index]
+                          .data() as Map<String, dynamic>;
+                      String imageUrl = data['imageUrl'] as String;
 
-// Display the image (you can use any widget here)
-return Image.asset(imageUrl);
+                      // Display the image (you can use any widget here)
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.asset(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      );
                     },
+                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
                   );
                 }
               },
