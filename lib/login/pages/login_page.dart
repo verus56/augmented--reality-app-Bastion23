@@ -1,4 +1,6 @@
 
+import 'package:wallpaper/Screens/navigation.dart';
+
 import '/login/pages/signup_page.dart';
 import '/login/services/auth_service.dart';
 import '/Screens/home_page.dart';
@@ -58,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => HomePage()),
+            builder: (BuildContext context) => NavigationPage()),
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); // Close the dialog
