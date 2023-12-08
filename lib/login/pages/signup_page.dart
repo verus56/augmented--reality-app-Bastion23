@@ -1,3 +1,5 @@
+import 'package:wallpaper/Screens/navigation.dart';
+
 import '/login/services/auth_service.dart';
 import '/Screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,7 +62,7 @@ class SignupPage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => HomePage()),
+            builder: (BuildContext context) => NavigationPage()),
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); // Close the dialog

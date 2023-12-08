@@ -21,40 +21,40 @@ class HomePage extends StatelessWidget {
  
  List<ImageDetails> imageDetailsList = [
     ImageDetails(
-      imagePath: "assets/1.JPG",
+      imagePath: "assets/1.jpg",
       title: "Title 1",
       description: "Description for image 1.",
     ),
     ImageDetails(
-      imagePath: "assets/2.JPG",
+      imagePath: "assets/2.jpg",
       title: "Title 2",
       description: "Description for image 2.",
     ),
        ImageDetails(
-      imagePath: "assets/3.JPG",
+      imagePath: "assets/3.jpg",
       title: "Title 1",
       description: "Description for image 1.",
     ),
     ImageDetails(
-      imagePath: "assets/4.JPG",
+      imagePath: "assets/4.jpg",
       title: "Title 2",
       description: "Description for image 2.",
     ),   ImageDetails(
-      imagePath: "assets/5.JPG",
+      imagePath: "assets/5.jpg",
       title: "Title 1",
       description: "Description for image 1.",
     ),
     ImageDetails(
-      imagePath: "assets/6.JPG",
+      imagePath: "assets/6.jpg",
       title: "Title 2",
       description: "Description for image 2.",
     ),   ImageDetails(
-      imagePath: "assets/7.JPG",
+      imagePath: "assets/7.jpg",
       title: "Title 1",
       description: "Description for image 1.",
     ),
     ImageDetails(
-      imagePath: "assets/8.JPG",
+      imagePath: "assets/8.jpg",
       title: "Title 2",
       description: "Description for image 2.",
     ),   ImageDetails(
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
       description: "Description for image 1.",
     ),
     ImageDetails(
-      imagePath: "assets/10.JPG",
+      imagePath: "assets/1.jpg",
       title: "Title 2",
       description: "Description for image 2.",
     ),
@@ -73,9 +73,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-      ),
+    
       body: SingleChildScrollView(
         child: Column(
    

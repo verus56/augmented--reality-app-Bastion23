@@ -100,7 +100,7 @@ class CenterNextButton extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()),
+                                    builder: (context) => SignupPage()),
                               );
                             },
                             child: InkWell(

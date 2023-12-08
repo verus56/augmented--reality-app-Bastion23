@@ -96,8 +96,11 @@ class _NavigationPageState extends State<NavigationPage> {
                 HomePage(),
                 page("Favorite Page"),
                 page("vidoe  Page"),
+
                 page("wallpaper  Page"),
-                CameraPage(),
+
+
+       
               ],
             ),
             // Bottom Navigation
