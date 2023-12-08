@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/camerapage.dart';
+
 import '../utils/colors.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -95,7 +96,11 @@ class _NavigationPageState extends State<NavigationPage> {
                 HomePage(),
                 page("Favorite Page"),
                 page("vidoe  Page"),
-                CameraPage(),
+
+                page("wallpaper  Page"),
+
+
+       
               ],
             ),
             // Bottom Navigation

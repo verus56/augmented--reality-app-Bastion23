@@ -86,7 +86,7 @@ class RelaxView extends StatelessWidget {
                   padding:
                       EdgeInsets.only(left: 40, right: 40, top: 16, bottom: 16),
                   child: Text(
-                    "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod",
+        "our application is an augmented reality application that allows you to see the 3D model of the bastion 23 in a  realistic ",
                     style: TextStyle(color: Color.fromARGB(182, 255, 255, 255),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
                     textAlign: TextAlign.center,
                   ),
@@ -96,10 +96,7 @@ class RelaxView extends StatelessWidget {
                 position: _imageAnimation,
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 350, maxHeight: 250),
-                  child: Image.asset(
-                    'assets/introduction_animation/relax_image.png',
-                    fit: BoxFit.contain,
-                  ),
+                
                 ),
               ),
             ],

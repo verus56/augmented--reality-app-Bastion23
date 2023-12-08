@@ -54,7 +54,9 @@ dependencies:
   firebase_core: ^2.8.0
   firebase_auth: ^4.3.0
   google_sign_in: ^6.0.2
-
+  just_audio: ^0.9.36
+  gallery_saver: ^2.0.3
+  permission_handler: ^10.4.5
 
 
 dev_dependencies:
@@ -85,6 +87,7 @@ flutter:
     - assets/
     - assets/introduction_animation/
     - assets/images/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
