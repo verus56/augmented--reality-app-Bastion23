@@ -65,16 +65,13 @@ class WelcomeView extends StatelessWidget {
                 child:  
                 Container(
                   constraints: BoxConstraints(maxWidth: 350, maxHeight: 350),
-                  child: Image.asset(
-                    'assets/introduction_animation/welcome_image.png',
-                    fit: BoxFit.contain,
-                  ),
+                
                 ),
               ),
               SlideTransition(
                 position: _welcomeFirstHalfAnimation,
                 child: Text(
-                  "Welcome",
+                  "one last step",
                   style: TextStyle(fontSize: 54.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
                 ),
               ),
@@ -82,7 +79,7 @@ class WelcomeView extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
                 child: Text(
-                  "Stay organised and live stress-free with you-do app",
+                  "let's get you started with your account",
                     style: TextStyle(color: Color.fromARGB(182, 255, 255, 255),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
                     textAlign: TextAlign.center,
                 ),

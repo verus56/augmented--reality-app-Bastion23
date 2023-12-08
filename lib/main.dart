@@ -3,17 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Screens/home_page.dart';
 import 'Screens/welcome.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:camera/camera.dart';
-import 'homepage.dart';
-late List<CameraDescription> cameras;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,10 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) => MaterialApp(
+      builder: (context, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'AR App',
-        home: WelcomeScreen(),
+        home: IntroductionAnimationScreen(),
       ),
       designSize: const Size(390, 844),
     );

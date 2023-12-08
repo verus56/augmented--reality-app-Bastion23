@@ -1,3 +1,8 @@
+import 'package:wallpaper/Screens/navigation.dart';
+import 'package:wallpaper/Screens/signup.dart';
+import 'package:wallpaper/login/pages/signup_page.dart';
+import 'package:wallpaper/widgets/signin_body.dart';
+
 import '/introduction_animation/components/care_view.dart';
 import '/introduction_animation/components/center_next_button.dart';
 import '/introduction_animation/components/mood_diary_vew.dart';
@@ -6,6 +11,7 @@ import '/introduction_animation/components/splash_view.dart';
 import '/introduction_animation/components/top_back_skip_view.dart';
 import '/introduction_animation/components/welcome_view.dart';
 import 'package:flutter/material.dart';
+import 'package:wallpaper/Screens/home_page.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
   const IntroductionAnimationScreen({Key? key}) : super(key: key);
@@ -35,37 +41,44 @@ class _IntroductionAnimationScreenState
 
   @override
   Widget build(BuildContext context) {
-    print(_animationController?.value);
     return Scaffold(
-      backgroundColor: Color(0xff79794f),
-      body: ClipRect(
-        child: Stack(
-          children: [
-            SplashView(
-              animationController: _animationController!,
-            ),
-            RelaxView(
-              animationController: _animationController!,
-            ),
-            CareView(
-              animationController: _animationController!,
-            ),
-            MoodDiaryVew(
-              animationController: _animationController!,
-            ),
-            WelcomeView(
-              animationController: _animationController!,
-            ),
-            TopBackSkipView(
-              onBackClick: _onBackClick,
-              onSkipClick: _onSkipClick,
-              animationController: _animationController!,
-            ),
-            CenterNextButton(
-              animationController: _animationController!,
-              onNextClick: _onNextClick,
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/14.JPG'), // Replace with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ClipRect(
+          child: Stack(
+            children: [
+              // Existing code for your animation components
+              SplashView(
+                animationController: _animationController!,
+              ),
+              RelaxView(
+                animationController: _animationController!,
+              ),
+              CareView(
+                animationController: _animationController!,
+              ),
+              MoodDiaryVew(
+                animationController: _animationController!,
+              ),
+              WelcomeView(
+                animationController: _animationController!,
+              ),
+              TopBackSkipView(
+                onBackClick: _onBackClick,
+                onSkipClick: _onSkipClick,
+                animationController: _animationController!,
+              ),
+              CenterNextButton(
+                animationController: _animationController!,
+                onNextClick: _onNextClick,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -112,6 +125,9 @@ class _IntroductionAnimationScreenState
   }
 
   void _signUpClick() {
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),
+    );
   }
 }

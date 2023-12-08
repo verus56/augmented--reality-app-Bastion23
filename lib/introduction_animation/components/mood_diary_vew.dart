@@ -75,13 +75,13 @@ class MoodDiaryVew extends StatelessWidget {
       child: SlideTransition(
         position: _secondHalfAnimation,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
+          padding: const EdgeInsets.only(  left: 50, right: 50,  bottom: 100),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "kach haja",
-                style: TextStyle(fontSize: 54.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
+                "the museum comes to you",
+                style: TextStyle(fontSize: 47.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
               ),
               SlideTransition(
                 position: _moodFirstHalfAnimation,
@@ -91,7 +91,7 @@ class MoodDiaryVew extends StatelessWidget {
                     padding: EdgeInsets.only(
                         left: 64, right: 64, top: 16, bottom: 16),
                     child: Text(
-                      "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                      "you no longer have to go to the museum to see the art, we bring the art to you",
                       style: TextStyle(color: Color.fromARGB(182, 255, 255, 255),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
                       textAlign: TextAlign.center,
                     ),
@@ -103,10 +103,10 @@ class MoodDiaryVew extends StatelessWidget {
                 child: SlideTransition(
                   position: _imageSecondHalfAnimation,
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 350, maxHeight: 250),
+                    constraints: BoxConstraints(maxWidth: 200, maxHeight: 250),
                     child: Image.asset(
-                      'assets/introduction_animation/mood_diary_image.png',
-                      fit: BoxFit.contain,
+                      'assets/museum-icon-12891.png',
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),

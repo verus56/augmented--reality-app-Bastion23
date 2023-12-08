@@ -85,10 +85,7 @@ class CareView extends StatelessWidget {
                   position: _imageSecondHalfAnimation,
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 350, maxHeight: 250),
-                    child: Image.asset(
-                      'assets/introduction_animation/care_image.png',
-                      fit: BoxFit.contain,
-                    ),
+                   
                   ),
                 ),
               ),
@@ -97,7 +94,7 @@ class CareView extends StatelessWidget {
                 child: SlideTransition(
                   position: _relaxSecondHalfAnimation,
                   child: Text(
-                    "kach haja",
+                    "its a new way to explore the bastion 23 musuem",
                     style: TextStyle(fontSize: 54.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
                   ),
                 ),
@@ -106,7 +103,7 @@ class CareView extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, bottom: 16, top: 16),
                 child: Text(
-                  "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                  "",
                   style: TextStyle(color: Color.fromARGB(182, 255, 255, 255),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
                   textAlign: TextAlign.center,
                 ),

@@ -1,52 +1,99 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
-import '../utils/colors.dart';
 import 'detail_wallpaper.dart';
+ class ImageDetails {
+  final String imagePath;
+  final String title;
+  final String description;
+
+  ImageDetails({
+    required this.imagePath,
+    required this.title,
+    required this.description,
+  });
+}
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  List wallpaperList = [
-    "1.jpg",
-    "2.jpg",
-    "3.jpg",
-    "4.jpg",
-    "5.jpg",
-    "6.jpg",
-    "7.jpg",
-    "8.jpg",
-    "9.jpg",
+ String commonAudioPath1 = "assets/anta-hobi-al-awal-lefqirat.mp3"; // Update with your audio path
+
+ 
+ List<ImageDetails> imageDetailsList = [
+    ImageDetails(
+      imagePath: "assets/1.jpg",
+      title: "Title 1",
+      description: "Description for image 1.",
+    ),
+    ImageDetails(
+      imagePath: "assets/2.jpg",
+      title: "Title 2",
+      description: "Description for image 2.",
+    ),
+       ImageDetails(
+      imagePath: "assets/3.jpg",
+      title: "Title 1",
+      description: "Description for image 1.",
+    ),
+    ImageDetails(
+      imagePath: "assets/4.jpg",
+      title: "Title 2",
+      description: "Description for image 2.",
+    ),   ImageDetails(
+      imagePath: "assets/5.jpg",
+      title: "Title 1",
+      description: "Description for image 1.",
+    ),
+    ImageDetails(
+      imagePath: "assets/6.jpg",
+      title: "Title 2",
+      description: "Description for image 2.",
+    ),   ImageDetails(
+      imagePath: "assets/7.jpg",
+      title: "Title 1",
+      description: "Description for image 1.",
+    ),
+    ImageDetails(
+      imagePath: "assets/8.jpg",
+      title: "Title 2",
+      description: "Description for image 2.",
+    ),   ImageDetails(
+      imagePath: "assets/12.JPG",
+      title: "Title 1",
+      description: "Description for image 1.",
+    ),
+    ImageDetails(
+      imagePath: "assets/1.jpg",
+      title: "Title 2",
+      description: "Description for image 2.",
+    ),
+    // Add more entries for each image
   ];
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+      return Scaffold(
+    
+      body: SingleChildScrollView(
+        child: Column(
+   
+     
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10.h,
+            height: 10,
           ),
           const ListTile(
             title: Text(
-              "bab el oued",
+              "Palais Rias Al Bahr",
               style: TextStyle(
-                  fontFamily: "mont",
-                  fontWeight: FontWeight.bold,
-                  color: blackColor,
-                  fontSize: 35),
+                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 35),
             ),
             subtitle: Text(
-              "Clique and join us now",
+              "enjoy your visit",
               style: TextStyle(
-                  fontFamily: "mont",
-                  fontWeight: FontWeight.bold,
-                  color: pinkColor,
-                  fontSize: 30),
+                  fontWeight: FontWeight.bold, color: Color.fromARGB(255, 113, 116, 144), fontSize: 30),
             ),
           ),
           StaggeredGridView.countBuilder(
@@ -54,20 +101,24 @@ class HomePage extends StatelessWidget {
             crossAxisCount: 4,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: wallpaperList.length,
+            itemCount: imageDetailsList.length,
             itemBuilder: (context, i) {
               return InkWell(
                 onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DetailWallpaper(image: "assets/${i + 1}.jpg"))),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailWallpaper(
+                      imageDetails: imageDetailsList[i],
+                      commonAudioPath: commonAudioPath1
+                    ),
+                  ),
+                ),
                 child: Hero(
-                  tag: "assets/$i.jpg",
+                  tag: imageDetailsList[i].imagePath,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: FadeInImage(
-                      image: AssetImage("assets/${i + 1}.jpg"),
+                      image: AssetImage(imageDetailsList[i].imagePath),
                       fit: BoxFit.cover,
                       placeholder: const AssetImage("assets/wp.png"),
                     ),
@@ -82,6 +133,6 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-    );
+       ) );
   }
 }

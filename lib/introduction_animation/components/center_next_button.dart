@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
+import 'package:wallpaper/Screens/home_page.dart';
 import '/login/pages/login_page.dart';
 import '/login/pages/signup_page.dart';
 import 'package:flutter/material.dart';
-
 class CenterNextButton extends StatelessWidget {
   final AnimationController animationController;
   final VoidCallback onNextClick;
@@ -168,7 +168,7 @@ class CenterNextButton extends StatelessWidget {
                     child: Text(
                       'Login',
                       style: TextStyle(
-                        color: Color(0xFF0D2C3F),
+                        color: Color.fromARGB(255, 174, 189, 199),
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,

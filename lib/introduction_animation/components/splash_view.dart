@@ -33,24 +33,21 @@ class _SplashViewState extends State<SplashView> {
               child: Container(
                   padding: const EdgeInsets.only(top: 140),
                   constraints: BoxConstraints(maxWidth: 350, maxHeight: 350),
-                  child: Image.asset(
-                    'assets/introduction_animation/introduction_image.png',
-                    fit: BoxFit.contain,
-                  ),
+                 
                 ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+              padding: EdgeInsets.only( left: 64, right: 64 , top: 10.0, bottom: 8.0),
               child: Text(
-                "bastun23",
-                style: TextStyle(fontSize: 54.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
+                "Bastion23",
+                style: TextStyle(fontSize: 55.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color.fromARGB(255, 224, 210, 210)),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 64, right: 64),
               child: Text(
-                "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
-                    style: TextStyle(color: Color.fromARGB(182, 255, 255, 255),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
+                "you want to have some fun at the bastion 23 musuem ?",
+                    style: TextStyle(color: Color.fromARGB(182, 246, 246, 246),fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter',),
                     textAlign: TextAlign.center,
               ),
             ),

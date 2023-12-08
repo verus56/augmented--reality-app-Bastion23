@@ -54,7 +54,10 @@ dependencies:
   firebase_core: ^2.8.0
   firebase_auth: ^4.3.0
   google_sign_in: ^6.0.2
-
+  just_audio: ^0.9.36
+  gallery_saver: ^2.0.3
+  permission_handler: ^10.4.5
+  cloud_firestore: ^4.13.5
 
 
 dev_dependencies:
@@ -85,20 +88,7 @@ flutter:
     - assets/
     - assets/introduction_animation/
     - assets/images/
-    - assets/BB.png
-    - assets/medical/Dentist/lateral_pterygoids.glb
-    - assets/medical/Dentist/lymphatics_of_head_and_neck.glb
-    - assets/medical/Dentist/permanent_dentition.glb
-    - assets/medical/Dentist/primary_lower_left_canine_fdi_73.glb
-    - assets/medical/Dentist/primary_lower_left_first_molar_fdi_74.glb
-    - assets/medical/Dentist/primary_upper_left_canine_fdi_63.glb
-    - assets/medical/2283_-_chloe_franck_-_anatomy.glb
-    - assets/medical/female_anatomy_2.glb
-    - assets/medical/human_skeleton.glb
-    - assets/medical/x-ray_torso.glb
-    - assets/medical/Chicken.glb
-    - assets/medical/ImageToStl.com_bastion_24_1.glb
-    - assets/medical/ImageToStl.com_bab.glb
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

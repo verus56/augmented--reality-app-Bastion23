@@ -1,4 +1,7 @@
 
+import 'package:wallpaper/Screens/navigation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '/login/pages/signup_page.dart';
 import '/login/services/auth_service.dart';
 import '/Screens/home_page.dart';
@@ -37,34 +40,53 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // sign user in method
-  void signUserIn(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+ void signUserIn(BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
+
+  try {
+    print('signUserIn function called');
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
     );
 
-    try {
-      print('signUserIn function called');
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      print('User signed in successfully');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => HomePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Close the dialog
-      showErrorMessage(e.code);
+    // Access the User object
+    User? user = userCredential.user;
+
+    if (user != null) {
+      // Print the user ID
+      print('User ID: ${user.uid}');
+
+      // Create a Firestore collection for the user
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'email': user.email,
+        // Add more fields as needed
+      });
+
+      print('User collection created successfully');
     }
+
+    print('User signed in successfully');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => NavigationPage(),
+      ),
+    );
+  } on FirebaseAuthException catch (e) {
+    Navigator.pop(context); // Close the dialog
+    showErrorMessage(e.code);
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
