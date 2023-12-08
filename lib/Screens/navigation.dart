@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:wallpaper/Screens/favorites.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/camerapage.dart';
 
@@ -94,7 +95,7 @@ class _NavigationPageState extends State<NavigationPage> {
               physics: const NeverScrollableScrollPhysics(),
               children: <Widget>[
                 HomePage(),
-                page("Favorite Page"),
+                FavoritesPage(),    
                 page("vidoe  Page"),
 
                 page("wallpaper  Page"),
