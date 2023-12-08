@@ -1,11 +1,20 @@
+import 'dart:async';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
-
-import '../utils/colors.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:wallpaper/Screens/home_page.dart';
 
 class DetailWallpaper extends StatefulWidget {
-  String image;
-  DetailWallpaper({Key? key, required this.image}) : super(key: key);
+  final ImageDetails imageDetails;
+  final String commonAudioPath;
+
+  DetailWallpaper({
+    Key? key,
+    required this.imageDetails,
+    required this.commonAudioPath,
+  }) : super(key: key);
 
   @override
   _DetailWallpaperState createState() => _DetailWallpaperState();
@@ -14,27 +23,53 @@ class DetailWallpaper extends StatefulWidget {
 class _DetailWallpaperState extends State<DetailWallpaper> {
   late AudioPlayer _audioPlayer;
 
+  Future<void> _saveImageToGallery() async {
+    try {
+      if (await Permission.storage.request().isGranted) {
+        // Permission is granted, proceed with saving the image to the gallery
+        await GallerySaver.saveImage(
+          widget.imageDetails.imagePath,
+          albumName: "CustomAlbumName", // Replace with your custom album name
+        );
+        print("Image saved to gallery successfully");
+      } else {
+        // Permission is not granted. Handle accordingly.
+        print("Permission denied to save image to gallery");
+      }
+    } catch (e) {
+      print("Error saving image to gallery: $e");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
-    _playBackgroundMusic();
+    _initAudio();
+    _playAudio();
   }
 
-  _playBackgroundMusic() async {
-    await _audioPlayer.play('assets/music/senya.mp3', isLocal: true);
+  _initAudio() async {
+    try {
+      await _audioPlayer.setAsset(widget.commonAudioPath);
+    } catch (e) {
+      print("Error initializing audio: $e");
+    }
   }
 
-  verify() {
-    setState(() {
-      _isLoading = true;
-    });
-    const oneSec = Duration(milliseconds: 1000);
+  _playAudio() async {
+    try {
+      await _audioPlayer.play();
+    } catch (e) {
+      print("Error playing audio: $e");
+    }
   }
 
-  bool _isLoading = false;
-  bool _isVerified = false;
-  String _code = '';
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +80,13 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
       body: Stack(
         children: [
           Hero(
-            tag: widget.image,
+            tag: widget.imageDetails.imagePath,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(widget.image.toString()),
+                  image: AssetImage(widget.imageDetails.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -78,9 +113,9 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
             left: 15,
             bottom: 200,
             child: Text(
-              "Wall On Hand",
+              widget.imageDetails.title,
               style: TextStyle(
-                color: pinkColor,
+                color: Colors.white,
                 fontFamily: "mont",
                 fontSize: 30,
                 fontWeight: FontWeight.w900,
@@ -92,7 +127,7 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
             right: 15,
             bottom: 120,
             child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fermentum som a vehicula iaculis. Donec a risus nec arcu placerat tempus.",
+              widget.imageDetails.description,
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: "mont",
@@ -109,32 +144,12 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                primary: pinkColor,
+                primary: Colors.pink,
                 fixedSize: const Size(180, 50),
               ),
-              onPressed: _code.length == 1
-                  ? null
-                  : () {
-                verify();
-              },
-              child: _isLoading
-                  ? SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  strokeWidth: 3,
-                  color: Colors.white,
-                ),
-              )
-                  : _isVerified
-                  ? Icon(
-                Icons.check_circle,
-                color: Colors.white,
-                size: 30,
-              )
-                  : Text(
-                "Download",
+              onPressed: _saveImageToGallery,
+              child: Text(
+                "download",
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: "mont",
@@ -154,14 +169,14 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(80),
                 border: Border.all(
-                  color: pinkColor,
+                  color: Color.fromARGB(255, 59, 53, 75),
                   width: 2,
                 ),
               ),
               child: Icon(
                 Icons.share,
                 size: 25,
-                color: pinkColor,
+                color: Color.fromARGB(255, 59, 53, 75),
               ),
             ),
           ),
@@ -175,25 +190,19 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(80),
                 border: Border.all(
-                  color: pinkColor,
+                  color: Color.fromARGB(255, 59, 53, 75),
                   width: 2,
                 ),
               ),
               child: Icon(
                 Icons.favorite,
                 size: 25,
-                color: pinkColor,
+                color: Color.fromARGB(255, 59, 53, 75),
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
   }
 }
