@@ -57,6 +57,7 @@ dependencies:
   just_audio: ^0.9.36
   gallery_saver: ^2.0.3
   permission_handler: ^10.4.5
+  cloud_firestore: ^4.13.5
 
 
 dev_dependencies:

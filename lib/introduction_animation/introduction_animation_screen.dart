@@ -85,7 +85,8 @@ class _IntroductionAnimationScreenState
   }
 
   void _onSkipClick() {
-    _animationController?.animateTo(0.8, duration: Duration(milliseconds: 1200));
+    _animationController?.animateTo(0.8,
+        duration: Duration(milliseconds: 1200));
   }
 
   void _onBackClick() {
@@ -123,15 +124,10 @@ class _IntroductionAnimationScreenState
     }
   }
 
-
- void _signUpClick() {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => SignupPage()
-    ),
-  );
+  void _signUpClick() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),
+    );
+  }
 }
-
-
- 

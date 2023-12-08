@@ -5,6 +5,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaper/Screens/home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DetailWallpaper extends StatefulWidget {
   final ImageDetails imageDetails;
@@ -40,6 +42,37 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
       print("Error saving image to gallery: $e");
     }
   }
+
+void addToFavorites(String imageUrl) async {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    // Access the 'favorites' subcollection within the user's document
+    CollectionReference favoritesCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('favorites');
+
+    // Check if the image is already in favorites
+    QuerySnapshot existingImages = await favoritesCollection
+        .where('imageUrl', isEqualTo: imageUrl)
+        .get();
+
+    if (existingImages.docs.isEmpty) {
+      // If the image is not in favorites, add it
+      await favoritesCollection.add({
+        'imageUrl': imageUrl,
+        // Add more fields as needed
+      });
+
+      print('Image added to favorites successfully');
+    } else {
+      // If the image is already in favorites, you can handle it accordingly
+      print('Image is already in favorites');
+    }
+  }
+}
+
 
   @override
   void initState() {
@@ -180,27 +213,20 @@ class _DetailWallpaperState extends State<DetailWallpaper> {
               ),
             ),
           ),
-          Positioned(
-            bottom: 50,
-            right: 80,
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(80),
-                border: Border.all(
-                  color: Color.fromARGB(255, 59, 53, 75),
-                  width: 2,
-                ),
-              ),
-              child: Icon(
-                Icons.favorite,
-                size: 25,
-                color: Color.fromARGB(255, 59, 53, 75),
-              ),
-            ),
-          ),
+         
+           Positioned(
+  bottom: 50,
+  right: 80,
+  child: IconButton(
+    icon: Icon(
+      Icons.favorite,
+      size: 25,
+      color: Color.fromARGB(255, 59, 53, 75),
+    ),
+    onPressed: () => addToFavorites(widget.imageDetails.imagePath),
+  ),
+),
+          
         ],
       ),
     );
