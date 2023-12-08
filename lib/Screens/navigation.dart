@@ -4,8 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/camerapage.dart';
+import 'package:wallpaper/Screens/social.dart';
 import 'art.dart';
 import '../utils/colors.dart';
+import '/Posts/camera_screen.dart';
+
+
+
 
 class NavigationPage extends StatefulWidget {
   NavigationPage({super.key});
@@ -13,6 +18,8 @@ class NavigationPage extends StatefulWidget {
   @override
   State<NavigationPage> createState() => _NavigationPageState();
 }
+
+
 
 class _NavigationPageState extends State<NavigationPage> {
   late PageController _pageController;
@@ -94,10 +101,11 @@ class _NavigationPageState extends State<NavigationPage> {
               physics: const NeverScrollableScrollPhysics(),
               children: <Widget>[
                 HomePage(),
-                page("Favorite Page"),
-                page("vidoe  Page"),
+                page("Favourites"),
+                social(),
                 art(),
-                CameraPage(),
+                CameraScreen(),
+                //CameraPage(),
               ],
             ),
             // Bottom Navigation
