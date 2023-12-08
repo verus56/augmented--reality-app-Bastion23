@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:wallpaper/Screens/navigation.dart';
 
 import '/login/services/auth_service.dart';
@@ -9,6 +10,7 @@ import '/login/pages/login_page.dart';
 import '/login/components/my_textfield.dart';
 import '/login/components/square_tile.dart';
 import '../../introduction_animation/introduction_animation_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({Key? key}) : super(key: key);
@@ -21,14 +23,21 @@ class _SignupPageState extends State<SignupPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final userNameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
 
-@override
-void dispose(){
-emailController.dispose();
-passwordController.dispose();
-confirmPasswordController.dispose();
-super.dispose();
-}
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    userNameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    super.dispose();
+  }
+
   // sign user in method
   dynamic signUserUp(BuildContext context) async {
     showDialog(
@@ -64,10 +73,18 @@ super.dispose();
 
     try {
       print('signUserUp function called');
+      // Create a user in Firebase
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
+      // add user details to firestore
+      addUserDetails(
+          firstNameController.text.trim(),
+          lastNameController.text.trim(),
+          userNameController.text.trim(),
+          emailController.text.trim());
+
       print('User signed up successfully');
       Navigator.pushReplacement(
         context,
@@ -77,6 +94,16 @@ super.dispose();
       Navigator.pop(context); // Close the dialog
       showErrorMessage(e.code);
     }
+  }
+
+  Future addUserDetails(
+      String firstName, String lastName, String userName, String email) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'username': firstName,
+      'firstname': lastName,
+      'lastname': userName,
+      'email': email,
+    });
   }
 
   @override
@@ -101,34 +128,61 @@ super.dispose();
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.3,
+                        height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       // welcome back, you've been missed!
                       const Text(
                         'Let\'s Create An Account For You!',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 20,
                             fontFamily: 'Inter'),
                       ),
-                      const SizedBox(
-                        height: 20, //12
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                      ),
+                      // username textfield
+                      MyTextField(
+                        controller: userNameController,
+                        hintText: 'Username',
+                        obscureText: false,
+                      ),
+         SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+
+                      MyTextField(
+                        controller: firstNameController,
+                        hintText: 'First Name',
+                        obscureText: false,
+                      ),
+                     SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+
+                      MyTextField(
+                        controller: lastNameController,
+                        hintText: 'Last Name',
+                        obscureText: false,
+                      ),
+            SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       MyTextField(
                         controller: emailController,
                         hintText: 'Email',
                         obscureText: false,
                       ),
-                      const SizedBox(
-                        height: 14,
+                     SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       MyTextField(
                         controller: passwordController,
                         hintText: 'Password',
                         obscureText: true,
                       ),
-                      const SizedBox(
-                        height: 10,
+                     SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       // password textfield
                       MyTextField(
@@ -136,11 +190,8 @@ super.dispose();
                         hintText: 'Confirm Password',
                         obscureText: true,
                       ),
-                      const SizedBox(
-                        height: 24, //14
-                      ),
-                      const SizedBox(
-                        height: 4,
+                     SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       // sign in button
                       SignupButton(
@@ -148,8 +199,8 @@ super.dispose();
                           signUserUp(context);
                         },
                       ),
-                      const SizedBox(
-                        height: 30, //20
+                        SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       // or continue with
                       Padding(

@@ -1,4 +1,5 @@
 
+import 'package:get/get.dart';
 import 'package:wallpaper/Screens/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -53,8 +54,8 @@ class _LoginPageState extends State<LoginPage> {
   try {
     print('signUserIn function called');
     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
 
     // Access the User object
