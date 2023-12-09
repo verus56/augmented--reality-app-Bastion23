@@ -247,7 +247,7 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ) ,
           Positioned(
-              bottom: 50,left: ScreenWidth /2 - 150,
+              bottom: 300,left: ScreenWidth /2 - 150,
               child: InkWell(
                 child: Container (
                     width: 300,
@@ -265,7 +265,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           children: [
                             Text("Post Snap",style: TextStyle(fontSize: 25,),),
                             SizedBox(width: 15,),
-                            Icon(Icons.send_rounded,color: Colors.black,size: 30,)
+                            Icon(Icons.send_rounded,color: Colors.red,size: 30,)
                           ],
                         ),
                       ),
