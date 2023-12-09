@@ -1,21 +1,18 @@
-import 'dart:async';
-
 import 'dart:io';
-
-import '/homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '/homepage.dart';
 import '/models/startup_post.dart';
 
 class PostScreen extends StatefulWidget {
-  PostScreen(this.CapturedImage, {super.key});
-  String CapturedImage;
+  PostScreen(this.capturedImage, {Key? key}) : super(key: key);
+  final String capturedImage;
 
   @override
   State<PostScreen> createState() => PostPage();
@@ -23,52 +20,33 @@ class PostScreen extends StatefulWidget {
 
 class PostPage extends State<PostScreen> {
   final user = FirebaseAuth.instance.currentUser!;
-  //  ${user.uid}
   String imageUrl = '';
-  String selectedimage = "";
   bool showLoading = false;
-  String UserId = "";
-  String timestamp = '';
   DateTime dateTime = DateTime.now();
 
-  var Post = post(
-    name: "User",
-    caption: "",
-    image: 'url',
-  );
+  late TextEditingController captionController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    postImage(widget.CapturedImage);
+  Future<String> selectImageFromGallery() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 60,
+    );
+
+    if (file != null) {
+      print("File path: " + file.path);
+      return file.path;
+    } else {
+      print('No image selected.');
+      return 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Palais_des_Rais_%28Es%27hine%29_-_Alger.JPG';
+    }
   }
-
-  late TextEditingController CaptionController = TextEditingController();
-Future<String> selectImageFromGallery() async {
-  ImagePicker imagePicker = ImagePicker();
-  XFile? file = await imagePicker.pickImage(
-    source: ImageSource.gallery,
-    imageQuality: 60,
-  );
-
-  if (file != null) {
-    print("File path: " + file.path);
-    setState(() {
-      selectedimage = file.path; // Use lowercase "i"
-    });
-    return file.path;
-  } else {
-    print('No image selected.');
-    return 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Palais_des_Rais_%28Es%27hine%29_-_Alger.JPG';
-  }
-}
-
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    String CurrentDate = '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+    String currentDate = '${dateTime.year}-${dateTime.month}-${dateTime.day}';
 
     return Scaffold(
       body: SafeArea(
@@ -80,41 +58,44 @@ Future<String> selectImageFromGallery() async {
                 Row(
                   children: [
                     Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(pagen());
+                        },
                         child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.shade200,
-                      ),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Get.to(pagen());
-                              },
-                              icon: Icon(
-                                Icons.arrow_back_rounded,
-                                color: Colors.black,
-                                size: 30,
-                              )),
-                          SizedBox(
-                            width: 5,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade200,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 20, top: 0),
-                            child: Text(
-                              "Create a Post",
-                              style: TextStyle(fontSize: 25),
-                            ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Get.to(pagen());
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_rounded,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Padding(
+                                padding: EdgeInsets.only(left: 20, top: 0),
+                                child: Text(
+                                  "Create a Post",
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    )),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Container(
                   height: 300,
                   decoration: BoxDecoration(
@@ -128,7 +109,7 @@ Future<String> selectImageFromGallery() async {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: FittedBox(
-                      child: Image.file(File(widget.CapturedImage)),
+                      child: Image.file(File(widget.capturedImage)),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -136,15 +117,15 @@ Future<String> selectImageFromGallery() async {
                 SizedBox(height: 10),
                 InkWell(
                   child: TextFormField(
-                    controller: CaptionController,
+                    controller: captionController,
                     decoration: InputDecoration(
                       hintText: 'Write a Caption...',
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(15)),
+                        borderSide: BorderSide(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade400, width: 2.0),
+                        borderSide: BorderSide(color: Colors.grey.shade400, width: 2.0),
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
@@ -153,9 +134,7 @@ Future<String> selectImageFromGallery() async {
                     SystemChannels.textInput.invokeMethod('TextInput.show');
                   },
                 ),
-                SizedBox(
-                  height: height * 0.22,
-                ),
+                SizedBox(height: height * 0.22),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -165,11 +144,12 @@ Future<String> selectImageFromGallery() async {
                         width: width * 0.45,
                         height: 50,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                            )),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                        ),
                         child: Center(
                           child: Text(
                             "Gallery",
@@ -178,27 +158,22 @@ Future<String> selectImageFromGallery() async {
                         ),
                       ),
                       onTap: () async {
-                        selectedimage =
-                            await selectImageFromGallery(); 
-                        postImage(selectedimage);
-                        
-
+                        imageUrl = await selectImageFromGallery();
                         print(imageUrl);
                       },
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     InkWell(
                       child: Container(
                         width: width * 0.45,
                         height: 50,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                            )),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                        ),
                         child: const Center(
                           child: Text(
                             "Camera",
@@ -207,18 +182,13 @@ Future<String> selectImageFromGallery() async {
                         ),
                       ),
                       onTap: () async {
-                        selectedimage =
-                            await selectImageFromCamera(); // Use lowercase "i"
-                        postImage(selectedimage);
-
+                        imageUrl = await selectImageFromCamera();
                         print(imageUrl);
                       },
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -237,12 +207,9 @@ Future<String> selectImageFromGallery() async {
                               children: [
                                 Text(
                                   "Post Your Image",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
+                                SizedBox(width: 15),
                                 Container(
                                   height: 25,
                                   width: 25,
@@ -260,20 +227,18 @@ Future<String> selectImageFromGallery() async {
                           ),
                         ),
                         onTap: () {
-                          createPost(Post, imageUrl, CaptionController.text,
-                              CurrentDate);
+                          createPost(captionController.text, imageUrl, currentDate);
                         },
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
         ),
       ),
     );
-    // Function to post image in firebase Storage
   }
 
   Future selectImageFromCamera() async {
@@ -281,72 +246,53 @@ Future<String> selectImageFromGallery() async {
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     if (file != null) {
       print("File path: " + file.path);
-      setState(() {
-        if (file.path != null) {
-          selectedimage = file.path;
-        }
-      });
       return file.path;
     } else {
       return '';
     }
   }
 
-  Future postImage(file) async {
-    String url = "";
-    String uniqueFileName = DateTime.now().microsecondsSinceEpoch.toString();
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('post_images')
-        .child(uniqueFileName);
-    setState(() {
-      showLoading = true;
-    });
-    await ref.putFile(File(file));
-    url = await ref.getDownloadURL();
-
-    setState(() {
-      showLoading = false;
-    });
-    imageUrl = url;
-    print("URL is : " + url);
-  }
-
-  // Function to insert data into firebase firestore
-  void createPost(Post, ImageUrl, caption, Date) async {
-    final PostDocId = FirebaseFirestore.instance.collection("posts").doc();
-    Get.snackbar(
-      "Please Wait ! ",
-      "Posting ...",
-      duration: Duration(seconds: 2),
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      snackStyle: SnackStyle.FLOATING,
-      dismissDirection: DismissDirection.startToEnd,
-      icon: Icon(
-        Icons.send_rounded,
-        color: Colors.white,
-      ),
-      showProgressIndicator: false,
-    );
-
-    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    print(timestamp);
-    print("User ID is : " + user.uid);
-    print("Image URL is : " + imageUrl);
-    print("Caption is : " + caption);
-    print("Date is : " + Date);
-
+  void createPost(String caption, String imageUrl, String date) async {
+    print("-------------------");
+    print("-------------------");
+    print("-------------------");
+    print("Creating post...");
     try {
-      await PostDocId.set({
-        "caption": caption,
-        "image": imageUrl,
-        "TimeStamp": timestamp,
-        "likes": 0,
-        "UserId": user.uid,
+      // Upload image to Firebase Storage
+      String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference storageReference = FirebaseStorage.instance.ref().child("images/$imageFileName");
+      UploadTask uploadTask = storageReference.putFile(File(imageUrl));
+
+
+
+      await uploadTask.whenComplete(() async {
+        // Get the URL of the uploaded image
+        imageUrl = await storageReference.getDownloadURL();
       });
+
+
+      print("Image uploaded successfully");
+
+      // Create a new document in Firestore
+      DocumentReference postDocRef = FirebaseFirestore.instance.collection("posts").doc();
+      
+      print("Document created successfully");
+      print("Document ID: " + postDocRef.id);
+      print("Caption: " + caption);
+      print("Image URL: " + imageUrl);
+      print("Date: " + date);
+      print("User ID: " + user.uid);
+
+      await postDocRef.set({
+        "caption": caption,
+        "imageUrl": imageUrl,
+        "timeStamp": date,
+        "likes": 0,
+        "userId": user.uid,
+      });
+
       Get.to(pagen());
-      print("Successfully posted ");
+      print("Successfully posted");
     } catch (e) {
       print(e.toString());
       print("Cannot make it !!!");
