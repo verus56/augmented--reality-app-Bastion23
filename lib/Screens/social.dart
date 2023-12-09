@@ -16,6 +16,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:wallpaper/Screens/getPosts.dart';
 import '../Screens/social.dart';
+
 class social extends StatefulWidget {
   const social({Key? key}) : super(key: key);
 
@@ -55,25 +56,70 @@ class _socialState extends State<social> {
   Widget build(BuildContext context) {
     const HeaderColors = [Colors.black, Colors.yellow, Colors.blue, Colors.red];
 
-    double screenHeight = MediaQuery.of(context).size.height;
+    double ScreenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: FutureBuilder(
-                future: getDocID(),
-                builder:(context, snapshot) {
-                return ListView.builder(
-                  itemCount: docIDs.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: getPosts(documentID: docIDs[index]),
+            Row(
+              children: [
+                Expanded(
+                    child: Container(
+                        height: 45,
+                        padding: EdgeInsets.only(left: 12, top: 4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: AnimatedTextKit(
+                            animatedTexts: [
+                              ColorizeAnimatedText(
+                                "share ur expreince",
+                                textStyle: TextStyle(
+                                  fontSize: 25,
+                                  letterSpacing: 1,
+                                ),
+                                colors: HeaderColors,
+                              )
+                            ],
+                            repeatForever: false,
+                            pause: Duration(milliseconds: 1000),
+                          ),
+                        ))),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 0, bottom: 0),
+              height: ScreenHeight * 0.80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(0),
+                color: Colors.white,
+              ),
+              child: LiquidPullToRefresh(
+                onRefresh: _handleRefresh,
+                child: FutureBuilder(
+                  future: getDocID(),
+                  builder: (context, snapshot) {
+                    return ListView.builder(
+                      itemCount: docIDs.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: getPosts(documentID: docIDs[index]),
+                        );
+                      },
                     );
                   },
-                );},
+                ),
+                backgroundColor: Colors.white,
+                color: Colors.black,
+                animSpeedFactor: 10,
               ),
             ),
           ],
