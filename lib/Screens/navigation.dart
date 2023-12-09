@@ -8,7 +8,7 @@ import 'package:wallpaper/Screens/camerapage.dart';
 import 'package:wallpaper/Posts/camera_screen.dart';
 import 'package:wallpaper/Screens/social.dart';
 import '../utils/colors.dart';
-
+import 'package:wallpaper/ArtScreen/arhome.dart';
 class NavigationPage extends StatefulWidget {
   NavigationPage({super.key});
 
@@ -99,8 +99,8 @@ class _NavigationPageState extends State<NavigationPage> {
                 FavoritesPage(),
                 CameraScreen(),
                 social(),
+                ArHome(),
 
-                page("wallpaper  Page"),
 
 
        
