@@ -135,7 +135,7 @@ class _SignupPageState extends State<SignupPage> {
                         'Let\'s Create An Account For You!',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 22,
                             fontFamily: 'Inter'),
                       ),
                       SizedBox(
