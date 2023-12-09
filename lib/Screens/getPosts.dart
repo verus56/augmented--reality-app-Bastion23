@@ -37,7 +37,7 @@ class _getPostsState extends State<getPosts> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           return Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(left: 10, right: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
@@ -51,7 +51,7 @@ class _getPostsState extends State<getPosts> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 6,
+                      height: 10,
                     ),
                     Expanded(
                       child: InkWell(
@@ -61,7 +61,7 @@ class _getPostsState extends State<getPosts> {
                             imageUrl: data["imageUrl"],
                             imageBuilder: (context, imageProvider) => Container(
                               width: 100.0,
-                              height: 100.0,
+                              height: 350.0,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
@@ -82,19 +82,15 @@ class _getPostsState extends State<getPosts> {
                     ),
                   ],
                 ),
-
-                SizedBox(
-                  height: 10,
-                ),
                 Row(
                   children: [
                     Expanded(
                         child: Container(
-                      height: 100,
+                      margin: EdgeInsets.only(left: 10, right: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(5),
-                            bottomLeft: Radius.circular(5)),
+                            bottomRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15)),
                         color: Colors.grey.shade50,
                       ),
                       child: Column(
@@ -105,27 +101,33 @@ class _getPostsState extends State<getPosts> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  height: 20,
-                                  margin: EdgeInsets.only(left: 10, top: 10),
-                                  child:Row(
+                                  padding: EdgeInsets.only(left: 10, top: 2),
+                                  child: Row(
                                     children: [
                                       InkWell(
                                         child: LikeButton(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              countPostion: CountPostion.right,
-                                                              //likeCount:snapshot.data!.docs[index]['likes'],
-                                                              size: 30,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          countPostion: CountPostion.right,
+                                          //likeCount:snapshot.data!.docs[index]['likes'],
+                                          size: 30,
                                         ),
                                         onTap: () {
                                           // await LikePost(likes,DocumentId);
                                           print("Like");
                                         },
                                       ),
-                                       Padding(
-                                                          padding: EdgeInsets.only(left: 10,top: 2),
-                                                          child: Icon(Icons.comment,color: Colors.grey,size: 30,),
-                                                        ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 10, top: 2),
+                                        child: Icon(
+                                          Icons.comment,
+                                          color: Colors.grey,
+                                          size: 30,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -133,9 +135,11 @@ class _getPostsState extends State<getPosts> {
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
                                 child: Container(
@@ -143,12 +147,25 @@ class _getPostsState extends State<getPosts> {
                                   child: Text(
                                     data["caption"],
                                     style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
+                              Expanded(
+                                child: Container(
+                                  child: Text(
+                                    data["caption"],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 20,
                           ),
                         ],
                       ),
