@@ -1,6 +1,6 @@
 {
-    "name": "wallpaper",
-    "short_name": "wallpaper",
+    "name": "Bastion32",
+    "short_name": "ArBastion",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

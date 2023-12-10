@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Screens/home_page.dart';
-import 'Screens/welcome.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:camera/camera.dart';

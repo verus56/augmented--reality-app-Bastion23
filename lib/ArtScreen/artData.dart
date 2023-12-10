@@ -27,7 +27,7 @@ class ArData {
       reviews: 80,
       rating: 4.4,
       perNight: "Play",
-      modelPath: 'assets/Model/group.glb',
+      modelPath: 'assets/Model/ImageToStl.com_bastion_24_1.glb',
     ),
     ArData(
       imagePath: 'assets/2.jpg',
@@ -48,7 +48,7 @@ class ArData {
       reviews: 90,
       rating: 4.4,
       perNight: "Play",
-      modelPath: 'assets/Model/Totoro.glb',
+      modelPath: 'assets/Model/roof.glb',
     ),
     // ArData(
     //   imagePath: 'assets/ArHome/home_2.png',
