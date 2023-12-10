@@ -9,6 +9,7 @@ import 'package:wallpaper/Posts/camera_screen.dart';
 import 'package:wallpaper/Screens/social.dart';
 import '../utils/colors.dart';
 import 'package:wallpaper/ArtScreen/arhome.dart';
+
 class NavigationPage extends StatefulWidget {
   NavigationPage({super.key});
 
@@ -65,28 +66,6 @@ class _NavigationPageState extends State<NavigationPage> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        appBar: AppBar(
-          actions: const [
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Icon(
-                Icons.search,
-                color: pinkColor,
-                size: 35,
-              ),
-            )
-          ],
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Icon(
-              Icons.app_registration_outlined,
-              size: 35,
-              color: pinkColor,
-            ),
-          ),
-        ),
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -96,44 +75,46 @@ class _NavigationPageState extends State<NavigationPage> {
               physics: const NeverScrollableScrollPhysics(),
               children: <Widget>[
                 HomePage(),
+
                 FavoritesPage(),
                 CameraScreen(),
                 social(),
                 ArHome(),
 
-
-
-       
               ],
             ),
             // Bottom Navigation
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 40.w),
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
               child: Container(
                 decoration: BoxDecoration(
-                    color: pinkColor, borderRadius: BorderRadius.circular(30)),
+                  color: pinkColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                   child: CupertinoTabBar(
-                      border: const Border(top: BorderSide(color: pinkColor)),
-                      backgroundColor: pinkColor,
-                      currentIndex: pageIndex,
-                      inactiveColor: Colors.white,
-                      onTap: onTap,
-                      activeColor: blackColor,
-                      // inactiveColo r: Colors.grey,
-                      items: const [
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.home),
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.favorite),
-                        ),
-                        BottomNavigationBarItem(icon: Icon(Icons.video_stable)),
-                        BottomNavigationBarItem(icon: Icon(Icons.now_wallpaper)),
-                        BottomNavigationBarItem(icon: Icon(Icons.camera)),
-                      ]),
+                    border: const Border(top: BorderSide(color: pinkColor)),
+                    backgroundColor: pinkColor,
+                    currentIndex: pageIndex,
+                    iconSize: 20.0, // Adjust the iconSize here
+                    inactiveColor: Colors.white,
+                    onTap: onTap,
+                    activeColor: blackColor,
+                    items: const [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite),
+                      ),
+                      BottomNavigationBarItem(icon: Icon(Icons.video_stable)),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.now_wallpaper)),
+                      BottomNavigationBarItem(icon: Icon(Icons.camera)),
+                    ],
+                  ),
                 ),
               ),
             ),

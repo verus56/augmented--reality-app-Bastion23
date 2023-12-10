@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:wallpaper/utils/colors.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -28,52 +28,177 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: currentUser == null
-          ? Center(
-              child: Text('User not authenticated'),
-            )
-          : StreamBuilder(
-              // Use a stream builder to listen for changes in the favorites collection
-              stream: favoritesCollection.snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Center(
-                    child: Text('No favorites yet'),
-                  );
-                } else {
-                  // Display the list of favorite images using StaggeredGridView
-                  return StaggeredGridView.countBuilder(
-                    crossAxisCount: 2,
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      // Extract the imageUrl from the document
-                      Map<String, dynamic> data = snapshot.data!.docs[index]
-                          .data() as Map<String, dynamic>;
-                      String imageUrl = data['imageUrl'] as String;
-
-                      // Display the image (you can use any widget here)
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
-                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                  );
-                }
-              },
+      extendBodyBehindAppBar: true,
+      appBar: buildAppBar(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/d.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6),
+              BlendMode.darken,
             ),
+          ),
+        ),
+        child :  SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              _buildHeader(),
+              SizedBox(height: 20),
+              Expanded(child: _buildFavoritesGrid()),
+            ],
+          ),
+        ),
+      ),
+     ) );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      width: double.infinity,
+      height: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+          image: AssetImage('assets/2.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            colors: [
+              Colors.black.withOpacity(.4),
+              Colors.black.withOpacity(.2),
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "Favorites",
+              style: TextStyle(
+                color: const Color.fromARGB(255, 226, 223, 223),
+                fontSize: 45,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFavoritesGrid() {
+    return StreamBuilder(
+      stream: favoritesCollection.snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(
+            child: Text('No favorites yet'),
+          );
+        } else {
+          return
+           GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+            ),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> data =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              String imageUrl = data['imageUrl'] as String;
+
+              return _GridItem(imageUrl: imageUrl);
+            },
+          );
+        }
+      },
+    );
+  }
+}
+
+AppBar buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      leading: Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Icon(Icons.menu, color: Colors.white),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.all(12.0),
+          child: IconButton(
+            onPressed: () {
+              // Handle search button tap
+            },
+            icon: Icon(Icons.search, color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
+class _GridItem extends StatelessWidget {
+  final String imageUrl;
+
+  const _GridItem({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.transparent,
+      elevation: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            image: AssetImage(imageUrl),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: Alignment.bottomRight,
+              colors: [
+                Colors.black.withOpacity(.4),
+                Colors.black.withOpacity(.2),
+              ],
+            ),
+          ),
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.favorite,
+                color: pinkColor,
+                size: 30,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
