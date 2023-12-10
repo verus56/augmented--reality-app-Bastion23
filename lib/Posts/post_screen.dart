@@ -25,6 +25,19 @@ class PostPage extends State<PostScreen> {
   DateTime dateTime = DateTime.now();
 
   late TextEditingController captionController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    imageUrl = widget.capturedImage; // Set initial value of imageUrl
+    print("-------------------------");
+    print("-------------------------");
+    print("-------------------------");
+    print("-------------------------");
+    print("l'image de image Url init est ");
+    print(imageUrl);
+    print(widget.capturedImage);
+  }
 
   Future<String> selectImageFromGallery() async {
     ImagePicker imagePicker = ImagePicker();
@@ -38,7 +51,8 @@ class PostPage extends State<PostScreen> {
       return file.path;
     } else {
       print('No image selected.');
-      return 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Palais_des_Rais_%28Es%27hine%29_-_Alger.JPG';
+      //https://upload.wikimedia.org/wikipedia/commons/d/dc/Palais_des_Rais_%28Es%27hine%29_-_Alger.JPG
+      return '';
     }
   }
 
@@ -47,7 +61,7 @@ class PostPage extends State<PostScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String currentDate = '${dateTime.year}-${dateTime.month}-${dateTime.day}';
-
+    late String imageUrl = '';
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -125,7 +139,8 @@ class PostPage extends State<PostScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400, width: 2.0),
+                        borderSide:
+                            BorderSide(color: Colors.grey.shade400, width: 2.0),
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
@@ -207,7 +222,8 @@ class PostPage extends State<PostScreen> {
                               children: [
                                 Text(
                                   "Post Your Image",
-                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
                                 ),
                                 SizedBox(width: 15),
                                 Container(
@@ -227,7 +243,8 @@ class PostPage extends State<PostScreen> {
                           ),
                         ),
                         onTap: () {
-                          createPost(captionController.text, imageUrl, currentDate);
+                          createPost(
+                              captionController.text, imageUrl, currentDate);
                         },
                       ),
                     ),
@@ -257,25 +274,29 @@ class PostPage extends State<PostScreen> {
     print("-------------------");
     print("-------------------");
     print("Creating post...");
+    print(widget.capturedImage);
+    if(imageUrl=='' ||imageUrl==Null ){
+      imageUrl=widget.capturedImage;
+      print("imageUrl=widget.capturedImage");
+    }
     try {
       // Upload image to Firebase Storage
       String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference storageReference = FirebaseStorage.instance.ref().child("images/$imageFileName");
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child("images/$imageFileName");
       UploadTask uploadTask = storageReference.putFile(File(imageUrl));
-
-
 
       await uploadTask.whenComplete(() async {
         // Get the URL of the uploaded image
         imageUrl = await storageReference.getDownloadURL();
       });
 
-
       print("Image uploaded successfully");
 
       // Create a new document in Firestore
-      DocumentReference postDocRef = FirebaseFirestore.instance.collection("posts").doc();
-      
+      DocumentReference postDocRef =
+          FirebaseFirestore.instance.collection("posts").doc();
+
       print("Document created successfully");
       print("Document ID: " + postDocRef.id);
       print("Caption: " + caption);
