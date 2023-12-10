@@ -109,7 +109,7 @@ flutter:
     - assets/introduction_animation/
     - assets/images/
     - assets/Model/
-
+    - assets/images/bg.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
