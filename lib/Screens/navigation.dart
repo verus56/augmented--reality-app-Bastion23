@@ -75,10 +75,12 @@ class _NavigationPageState extends State<NavigationPage> {
               physics: const NeverScrollableScrollPhysics(),
               children: <Widget>[
                 HomePage(),
+
                 FavoritesPage(),
                 CameraScreen(),
                 social(),
                 ArHome(),
+
               ],
             ),
             // Bottom Navigation

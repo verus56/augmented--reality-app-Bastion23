@@ -1,5 +1,5 @@
 import 'package:wallpaper/Screens/navigation.dart';
-import 'package:wallpaper/Screens/signup.dart';
+
 import 'package:wallpaper/login/pages/signup_page.dart';
 import 'package:wallpaper/widgets/signin_body.dart';
 
@@ -123,11 +123,9 @@ class _IntroductionAnimationScreenState
       _signUpClick();
     }
   }
-
-  void _signUpClick() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignupPage()),
-    );
+void _signUpClick() {
+    Navigator.pop(context);
   }
+
+
 }

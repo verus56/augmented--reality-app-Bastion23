@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:wallpaper/Screens/home_page.dart';
+import 'package:wallpaper/login/pages/auth_page.dart';
 import '/login/pages/login_page.dart';
 import '/login/pages/signup_page.dart';
 import 'package:flutter/material.dart';
