@@ -4,9 +4,12 @@ import 'Screens/home_page.dart';
 import 'Screens/welcome.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:camera/camera.dart';
+late List<CameraDescription> cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }

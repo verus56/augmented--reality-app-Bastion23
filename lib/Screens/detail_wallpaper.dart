@@ -177,7 +177,7 @@ void addToFavorites(String imageUrl) async {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                primary: Colors.pink,
+                primary: Color.fromARGB(255, 77, 74, 52),
                 fixedSize: const Size(180, 50),
               ),
               onPressed: _saveImageToGallery,
