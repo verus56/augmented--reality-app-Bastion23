@@ -65,22 +65,22 @@ class _CameraScreenState extends State<CameraScreen> {
     super.initState();
     _controller = CameraController(cameras[0], ResolutionPreset.max);
     _controller.initialize().then((_){
-        if(!mounted) {
-          return;
+      if(!mounted) {
+        return;
+      }
+      setState(() {});
+    }).catchError((Object e) {
+      if(e is CameraException){
+        switch(e.code){
+          case 'CameraAccessDenied':
+            print("access was denied");
+            break;
+          default:
+            print(e.description);
+            break;
         }
-        setState(() {});
-      }).catchError((Object e) {
-        if(e is CameraException){
-          switch(e.code){
-            case 'CameraAccessDenied':
-              print("access was denied");
-              break;
-            default:
-              print(e.description);
-              break;
-          }
-        }
-      });
+      }
+    });
   }
 
 
@@ -92,16 +92,16 @@ class _CameraScreenState extends State<CameraScreen> {
     final ScreenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(0),
-        child: Center(
-          child: CapturedImage == '' ? Stack(
-            children: [
-              GestureDetector(
-                onTapUp: (details){
-                  _onTap(details);
-                },
-               child: Container(
+        body: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Center(
+            child: CapturedImage == '' ? Stack(
+              children: [
+                GestureDetector(
+                  onTapUp: (details){
+                    _onTap(details);
+                  },
+                  child: Container(
                     height: ScreenHeight,
                     width: double.infinity,
                     decoration:BoxDecoration(
@@ -109,117 +109,117 @@ class _CameraScreenState extends State<CameraScreen> {
                     ) ,
                     child: CameraPreview(_controller),
                   ),
-             ),
-              Positioned(
-                top: 10,left: ScreenWidth /2 -125,
-                  child: Container(
-                    height: 30,
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFebebeb).withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(30)
-                    ),
-                    child: Center(
-                      child:Text("SnapPost",style: GoogleFonts.quicksand(
-                          letterSpacing: 1,
-                          textStyle: TextStyle(color: Colors.white,fontSize: 22,)
-                      )
-                    ),
-                    )
-                  )
-              ),
-              Positioned(
-                  bottom: 65,left: ScreenWidth /2-110,
-                  child: InkWell(
+                ),
+                Positioned(
+                    top: 10,left: ScreenWidth /2 -125,
                     child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration:BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.black,
-                      ),
-                      child: Icon(Icons.add_to_photos_outlined,color: Colors.white,),
-                    ),
-                    onTap: (){
-                      selectImageFromGallery();
-                    },
-                  )
-              ),
-              Positioned(
-                bottom: 50,left: ScreenWidth /2-40,
-                  child: InkWell(
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 5,
+                        height: 30,
+                        width: 250,
+                        decoration: BoxDecoration(
+                            color: Color(0xFFebebeb).withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Center(
+                          child:Text("SnapPost",style: GoogleFonts.quicksand(
+                              letterSpacing: 1,
+                              textStyle: TextStyle(color: Colors.white,fontSize: 22,)
+                          )
+                          ),
                         )
+                    )
+                ),
+                Positioned(
+                    bottom: 65,left: ScreenWidth /2-110,
+                    child: InkWell(
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration:BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.black,
+                        ),
+                        child: Icon(Icons.add_to_photos_outlined,color: Colors.white,),
                       ),
-                      child: Center(
-                        child: Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
+                      onTap: (){
+                        selectImageFromGallery();
+                      },
+                    )
+                ),
+                Positioned(
+                    bottom: 50,left: ScreenWidth /2-40,
+                    child: InkWell(
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(
                               color: Colors.white,
-                              width: 2
+                              width: 5,
                             )
+                        ),
+                        child: Center(
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                    color: Colors.white,
+                                    width: 2
+                                )
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    onTap: () async{
-                      if(!_controller.value.isInitialized){
-                        return null;
-                      }
-                      if(_controller.value.isTakingPicture){
-                        return null;
-                      }
+                      onTap: () async{
+                        if(!_controller.value.isInitialized){
+                          return null;
+                        }
+                        if(_controller.value.isTakingPicture){
+                          return null;
+                        }
 
-                      try{
-                        await _controller.setFlashMode(FlashMode.off);
-                        XFile file = await _controller.takePicture();
-                        //File f = File(Picfile.path);
-                        //var CompressedFile = await FlutterImageCompress.compressWithFile(f);
-                        setState(() {
-                          CapturedImage = file.path;
-                        });
+                        try{
+                          await _controller.setFlashMode(FlashMode.off);
+                          XFile file = await _controller.takePicture();
+                          //File f = File(Picfile.path);
+                          //var CompressedFile = await FlutterImageCompress.compressWithFile(f);
+                          setState(() {
+                            CapturedImage = file.path;
+                          });
 
-                        //Navigator.push(context,MaterialPageRoute(builder: (context)=> ImagePreview(file)));
-                      }on CameraException catch (e){
-                        debugPrint("Error occoured while taking pic : $e");
-                        return null;
-                      }
-                    },
-                  )
-              ),
-              Positioned(
-                  bottom: 65,left: ScreenWidth /2+60,
-                  child: InkWell(
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration:BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.black,
+                          //Navigator.push(context,MaterialPageRoute(builder: (context)=> ImagePreview(file)));
+                        }on CameraException catch (e){
+                          debugPrint("Error occoured while taking pic : $e");
+                          return null;
+                        }
+                      },
+                    )
+                ),
+                Positioned(
+                    bottom: 65,left: ScreenWidth /2+60,
+                    child: InkWell(
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration:BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.black,
+                        ),
+                        child: Icon(Icons.flip_camera_android,color: Colors.white,),
                       ),
-                      child: Icon(Icons.flip_camera_android,color: Colors.white,),
-                    ),
-                    onTap: () async{
+                      onTap: () async{
 
-                    },
-                  )
-              ),
-            ],
-          ) : ShowImage(ScreenHeight, ScreenWidth, CapturedImage),
-        ),
-      )
+                      },
+                    )
+                ),
+              ],
+            ) : ShowImage(ScreenHeight, ScreenWidth, CapturedImage),
+          ),
+        )
     );
   }
 
@@ -247,9 +247,9 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ) ,
           Positioned(
-                bottom: 50,left: ScreenWidth /2 - 150,
-                child: InkWell(
-                  child: Container (
+              bottom: 50,left: ScreenWidth /2 - 150,
+              child: InkWell(
+                child: Container (
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
@@ -270,12 +270,12 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                       ),
                     )
-                  ),
-                  onTap: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostScreen(CapturedImage)));
-                  },
-                )
-            ),
+                ),
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostScreen(CapturedImage)));
+                },
+              )
+          ),
         ],
       ),
     );

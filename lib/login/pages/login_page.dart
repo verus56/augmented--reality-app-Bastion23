@@ -1,10 +1,8 @@
 
 import 'package:wallpaper/Screens/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '/login/pages/signup_page.dart';
 import '/login/services/auth_service.dart';
-import '/Screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/login/components/signin_button.dart';
@@ -29,11 +27,11 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-            backgroundColor: Colors.deepPurple,
+            backgroundColor: const Color.fromARGB(255, 194, 192, 198),
             title: Center(
               child: Text(
                 message,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
             ));
       },
@@ -93,8 +91,7 @@ class _LoginPageState extends State<LoginPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: const Color(0xff79794f),
-        appBar: AppBar(
+         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () {
@@ -109,8 +106,20 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
+       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/r.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child:
+       
+        SingleChildScrollView(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,12 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  // logo
-                  SizedBox(
-                    height: 200,
-                    width: 350,
-                    child: Image.asset('assets/images/login_image.png'),
-                  ),
+               
+                
                   const SizedBox(
                     height: 50,
                   ),
@@ -200,12 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.white,
-                          ),
-                        ),
+                       
                       ],
                     ),
                   ),
@@ -266,6 +266,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
+         );
   }
 }
