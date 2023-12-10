@@ -76,7 +76,7 @@ class SignupPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color(0xff79794f),
-        appBar: AppBar(
+       appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () {
@@ -91,7 +91,18 @@ class SignupPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: SafeArea(
+       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/r.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: SafeArea(
           child: SingleChildScrollView(
             child: Center(
               child: Column(
@@ -264,7 +275,7 @@ class SignupPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
+         )   ),
     );
   }
 }
