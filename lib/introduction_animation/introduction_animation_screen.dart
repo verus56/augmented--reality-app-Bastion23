@@ -1,7 +1,5 @@
 import 'package:wallpaper/Screens/navigation.dart';
 import 'package:wallpaper/login/pages/signup_page.dart';
-import 'package:wallpaper/widgets/signin_body.dart';
-
 import '/introduction_animation/components/care_view.dart';
 import '/introduction_animation/components/center_next_button.dart';
 import '/introduction_animation/components/mood_diary_vew.dart';

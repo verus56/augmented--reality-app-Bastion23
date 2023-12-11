@@ -16,6 +16,45 @@ class getPosts extends StatefulWidget {
 }
 
 class _getPostsState extends State<getPosts> {
+  Future<String> getUserName(String userID) async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userID)
+          .get();
+
+      if (snapshot.exists) {
+        return snapshot.get("username") ?? "User0001";
+      } else {
+        return "User0001";
+      }
+    } catch (e) {
+      // Handle any errors that might occur during the data fetching.
+      print("Error fetching username: $e");
+      return "User0001";
+    }
+  }
+
+  Future<String> getUserAvatar(String userID) async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userID)
+          .get();
+
+      if (snapshot.exists) {
+        return snapshot.get("avatar") ??
+            "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+      } else {
+        return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+      }
+    } catch (e) {
+      // Handle any errors that might occur during the data fetching.
+      print("Error fetching username: $e");
+      return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
@@ -25,6 +64,7 @@ class _getPostsState extends State<getPosts> {
           .get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        print("we are here");
         if (snapshot.hasError) {
           return const Text("Something went wrong");
         }
@@ -37,150 +77,214 @@ class _getPostsState extends State<getPosts> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           return Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: CachedNetworkImage(
-                            imageUrl: data["imageUrl"],
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: 100.0,
-                              height: 350.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.cover),
-                              ),
-                            ),
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
-                        ),
-                        onDoubleTap: () {
-                          print("Double Tap .........");
-                          //LikePost(likes, DocumentId);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15)),
-                        color: Colors.grey.shade50,
-                      ),
-                      child: Column(
+                Padding(
+                  // padding only in the top and bottom
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 10, top: 2),
-                                  child: Row(
-                                    children: [
-                                      InkWell(
-                                        child: LikeButton(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          countPostion: CountPostion.right,
-                                          //likeCount:snapshot.data!.docs[index]['likes'],
-                                          size: 30,
-                                        ),
-                                        onTap: () {
-                                          // await LikePost(likes,DocumentId);
-                                          print("Like");
-                                        },
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(left: 10, top: 2),
-                                        child: Icon(
-                                          Icons.comment,
-                                          color: Colors.grey,
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                          FutureBuilder<String>(
+                            future: getUserAvatar(data["userId"]),
+                            builder: (context, avatarSnapshot) {
+                              return CircleAvatar(
+                                radius: 20,
+                                backgroundImage: avatarSnapshot.hasData
+                                    ? Image.network(
+                                        avatarSnapshot.data ?? "",
+                                        fit: BoxFit.cover,
+                                      ).image
+                                    : Image.network(
+                                        "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg",
+                                        fit: BoxFit.cover,
+                                      ).image,
+                              );
+                            },
                           ),
                           SizedBox(
-                            height: 20,
+                            width: 10,
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    data["caption"],
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  child: Text(
-                                    data["caption"],
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
+                          FutureBuilder<String>(
+                            future: getUserName(data["userId"]),
+                            builder: (context, usernameSnapshot) {
+                              return Text(
+                                usernameSnapshot.data ?? "User0001",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              );
+                            },
                           ),
                         ],
                       ),
-                    )),
-                  ],
+                      Icon(Icons.menu),
+                    ],
+                  ),
                 ),
-                //Text(data["TimeStamp"]),
-                //Text(data["UserId"]),
-                //Text(data["likes"]),
+                Container(
+                  height: 400.0, // Set a fixed height
+                  child: InkWell(
+                    child: CachedNetworkImage(
+                      imageUrl: data["imageUrl"],
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                    onDoubleTap: () {
+                      print("Double Tap .........");
+                      // LikePost(likes, DocumentId);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.favorite),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Icon(Icons.chat_bubble_outline),
+                          ), // Padding
+                          Icon(Icons.share),
+                        ],
+                      ),
+                      Icon(Icons.bookmark),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${data["likes"]} likes',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: FutureBuilder<String>(
+                    future: getUserName(data["userId"]),
+                    builder: (context, usernameSnapshot) {
+                      return RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: usernameSnapshot.data ?? "User0001",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' ${data["caption"]}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           );
         }
 
-        return const Text("loading");
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        //data["username"],
+                        "username",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Icon(Icons.menu),
+                ],
+              ),
+            ),
+            Container(
+              height: 400,
+              color: Colors.grey[300],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.favorite),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Icon(Icons.chat_bubble_outline),
+                      ), // Padding
+                      Icon(Icons.share),
+                    ],
+                  ),
+                  Icon(Icons.bookmark),
+                ],
+              ),
+            ),
+            Text(
+              'likes',
+              //'Liked by ${data["likes"]}',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "username  ",
+                      //'${data["username"]}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: " caption",
+                      //'${data["caption"]}',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
       },
     );
   }
