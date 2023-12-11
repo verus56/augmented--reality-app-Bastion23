@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:like_button/like_button.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class getPosts extends StatefulWidget {
   final String documentID;
@@ -64,7 +62,6 @@ class _getPostsState extends State<getPosts> {
           .get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        print("we are here");
         if (snapshot.hasError) {
           return const Text("Something went wrong");
         }
@@ -72,7 +69,7 @@ class _getPostsState extends State<getPosts> {
         if (snapshot.hasData && !snapshot.data!.exists) {
           return const Text("Document does not exist");
         }
-
+        bool isLiked=false;
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
@@ -83,7 +80,6 @@ class _getPostsState extends State<getPosts> {
                 Padding(
                   // padding only in the top and bottom
                   padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -155,12 +151,29 @@ class _getPostsState extends State<getPosts> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.favorite),
+                          LikeButton(
+                            size: 30,
+                            likeCount: data["likes"],
+                            onTap: (isLiked) {
+                              // Handle like button tap
+                              // You can update the like status in the database
+                              // and update the UI accordingly
+                              print("Like Button Tapped!");
+                              return onLikeButtonTap(isLiked, data);
+                            },
+                            likeBuilder: (bool isLiked) {
+                              return Icon(
+                                Icons.favorite,
+                                color: isLiked ? Colors.red : Colors.grey,
+                                size: 30,
+                              );
+                            },
+                          ),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Icon(Icons.chat_bubble_outline),
-                          ), // Padding
+                          ),
                           Icon(Icons.share),
                         ],
                       ),
@@ -286,6 +299,27 @@ class _getPostsState extends State<getPosts> {
           ],
         );
       },
-    );
+    );}
+
+Future<bool> onLikeButtonTap(bool isLiked, Map<String, dynamic> data) async {
+  try {
+    isLiked = !isLiked;
+
+    // Calculate the updated likes count
+    int updatedLikes = isLiked ? data["likes"] + 1 : data["likes"] - 1;
+
+    // Ensure that the likes count doesn't go below zero
+    updatedLikes = updatedLikes >= 0 ? updatedLikes : 0;
+
+    await FirebaseFirestore.instance.collection("posts").doc(widget.documentID).update({
+      "isLiked": isLiked,
+      "likes": updatedLikes,
+    });
+
+    return isLiked;
+  } catch (e) {
+    print("Error updating like status: $e");
+    return false;
   }
+}
 }
