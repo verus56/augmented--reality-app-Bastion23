@@ -8,6 +8,7 @@ import 'package:wallpaper/Posts/camera_screen.dart';
 import 'package:wallpaper/Screens/social.dart';
 import 'package:wallpaper/ArtScreen/arhome.dart';
 
+
 class drawer extends StatefulWidget {
   const drawer({Key? key});
 
@@ -60,7 +61,8 @@ class _drawerState extends State<drawer> {
           });
           zoomDrawerController.toggle?.call();
         },
-        selectedItemColor: Theme.of(context).primaryColor,
+        backgroundColor: Color.fromARGB(255, 103, 83, 83),
+        selectedItemColor: Color.fromARGB(255, 43, 38, 38),
         selectedFontSize: 14.0,
         selectedIconTheme: const IconThemeData(size: 28.0),
         unselectedIconTheme: IconThemeData(size: 25.0, color: Colors.grey[500]),
@@ -72,6 +74,7 @@ class _drawerState extends State<drawer> {
             icon: Icon(screenIconTest[index]),
             label: screenStringTest[index],
           ),
+
         ),
       ),
     );
@@ -201,7 +204,7 @@ class _drawerState extends State<drawer> {
       case 2:
         return  ArHome();
       case 3:
-        return  CameraPage();
+        return  CameraScreen();
        case 4:
         return  social();
      
