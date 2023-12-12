@@ -59,7 +59,6 @@ class _drawerState extends State<drawer> {
           setState(() {
             selectedIndex = index;
           });
-          zoomDrawerController.toggle?.call();
         },
         backgroundColor: Color.fromARGB(255, 103, 83, 83),
         selectedItemColor: Color.fromARGB(255, 43, 38, 38),
