@@ -1,126 +1,227 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper/Screens/favorites.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/camerapage.dart';
 import 'package:wallpaper/Posts/camera_screen.dart';
 import 'package:wallpaper/Screens/social.dart';
-import '../utils/colors.dart';
 import 'package:wallpaper/ArtScreen/arhome.dart';
 
-class NavigationPage extends StatefulWidget {
-  NavigationPage({super.key});
+class drawer extends StatefulWidget {
+  const drawer({Key? key});
 
   @override
-  State<NavigationPage> createState() => _NavigationPageState();
+  State<drawer> createState() => _drawerState();
 }
 
-class _NavigationPageState extends State<NavigationPage> {
-  late PageController _pageController;
-
-  int pageIndex = 0;
+class _drawerState extends State<drawer> {
+  final zoomDrawerController = ZoomDrawerController();
+  List<String> screenStringTest = ["Home", "Favorites", "AR", "Camera", "Post"];
+  List<IconData> screenIconTest = [
+    Icons.apps,
+    Icons.favorite,
+    Icons.star,
+    Icons.camera,
+    Icons.post_add,
+  ];
+  int selectedIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  onPageChanged(int pageIndex) {
-    setState(() {
-      this.pageIndex = pageIndex;
-    });
-  }
-
-  onTap(int pageIndex) {
-    _pageController.animateToPage(
-      pageIndex,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceIn,
+  Widget build(BuildContext context) {
+    return ZoomDrawer(
+      controller: zoomDrawerController,
+      menuBackgroundColor: Color.fromARGB(255, 246, 244, 244),
+      shadowLayer1Color: const Color.fromARGB(255, 245, 245, 245),
+      shadowLayer2Color:
+          Color.fromARGB(255, 139, 125, 125).withOpacity(0.3),
+      borderRadius: 50.0,
+      showShadow: true,
+      mainScreen: _buildMainScreen(context),
+      menuScreen: _menuScreen(context),
+      drawerShadowsBackgroundColor: Colors.grey,
+      slideWidth: MediaQuery.of(context).size.width * 0.65,
     );
   }
 
-  Widget page(String title) {
-    return Center(
-      child: Text(
-        title,
-        style: const TextStyle(
-            fontFamily: "mont",
-            fontWeight: FontWeight.bold,
-            color: blackColor,
-            fontSize: 35),
+  Scaffold _buildMainScreen(BuildContext context) {
+    return Scaffold(
+      drawerEnableOpenDragGesture: true,
+    
+      body: _buildBody(selectedIndex),
+      
+      
+  
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+          zoomDrawerController.toggle?.call();
+        },
+        selectedItemColor: Theme.of(context).primaryColor,
+        selectedFontSize: 14.0,
+        selectedIconTheme: const IconThemeData(size: 28.0),
+        unselectedIconTheme: IconThemeData(size: 25.0, color: Colors.grey[500]),
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        items: List.generate(
+          screenStringTest.length,
+          (index) => BottomNavigationBarItem(
+            icon: Icon(screenIconTest[index]),
+            label: screenStringTest[index],
+          ),
+        ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        body: Stack(
-          alignment: Alignment.bottomCenter,
+  Container _menuScreen(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PageView(
-              controller: _pageController,
-              onPageChanged: onPageChanged,
-              physics: const NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                HomePage(),
-
-                FavoritesPage(),
-                CameraScreen(),
-                social(),
-                ArHome(),
-
-              ],
+            IconButton(
+              onPressed: () {
+                zoomDrawerController.toggle?.call();
+              },
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
             ),
-            // Bottom Navigation
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: pinkColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                  child: CupertinoTabBar(
-                    border: const Border(top: BorderSide(color: pinkColor)),
-                    backgroundColor: pinkColor,
-                    currentIndex: pageIndex,
-                    iconSize: 20.0, // Adjust the iconSize here
-                    inactiveColor: Colors.white,
-                    onTap: onTap,
-                    activeColor: blackColor,
-                    items: const [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 70),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      CircleAvatar(
+                        foregroundImage: AssetImage("assets/profile.jpg"),
+                        radius: 50,
+                        backgroundColor: Color.fromARGB(255, 82, 81, 86),
                       ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.favorite),
+                      SizedBox(
+                        height: 10,
                       ),
-                      BottomNavigationBarItem(icon: Icon(Icons.video_stable)),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.now_wallpaper)),
-                      BottomNavigationBarItem(icon: Icon(Icons.camera)),
+                      
                     ],
                   ),
                 ),
-              ),
-            ),
+                const SizedBox(height: 25),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(5, (index) {
+                    return Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          zoomDrawerController.toggle?.call();
+                        },
+                        splashColor:
+                            Theme.of(context).primaryColor.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(20),
+                        child: ListTile(
+                          leading: Icon(
+                            screenIconTest[index],
+                            color: Colors.black,
+                            size: 27,
+                          ),
+                          title: Text(
+                            screenStringTest[index],
+                            style: const TextStyle(
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 70),
+                  child: TextButton.icon(
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all(
+                          Theme.of(context).primaryColor.withOpacity(0.5)),
+                      side: MaterialStateProperty.all(
+                        BorderSide(
+                            color: Colors.black.withOpacity(0.5), width: 1.5),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {},
+                    icon: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Icon(
+                        Icons.logout,
+                        color:  Colors.black,
+                      ),
+                    ),
+                    label: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),
     );
   }
+
+  Widget _buildBody(int selectedIndex) {
+    // Replace this switch statement with the specific pages you want to display
+    switch (selectedIndex) {
+      case 0:
+        return HomePage();
+      case 1:
+        return FavoritesPage();
+   
+      case 2:
+        return  ArHome();
+      case 3:
+        return  CameraPage();
+       case 4:
+        return  social();
+     
+  
+     
+      default:
+        return HomePage();
+    }
+  }
+
+AppBar buildAppBar() {
+  return AppBar(
+   
+    elevation: 0, // No shadow
+    leading: IconButton(
+      onPressed: () => zoomDrawerController.toggle?.call(),
+      icon: const Icon(Icons.menu),
+    ),
+  
+    
+  );
+}
 }

@@ -42,11 +42,21 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
     return Theme(
       data: HomeAppTheme.buildLightTheme(),
       child: Container(
+         decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/r.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6),
+              BlendMode.darken,
+            ),
+          ),
+        ),
         child: Scaffold(
           body: Stack(
             children: <Widget>[
               InkWell(
-                splashColor: Colors.transparent,
+                splashColor: Color.fromARGB(0, 132, 66, 66),
                 focusColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 hoverColor: Colors.transparent,

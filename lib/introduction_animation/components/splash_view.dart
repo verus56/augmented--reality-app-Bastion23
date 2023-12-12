@@ -40,7 +40,7 @@ class _SplashViewState extends State<SplashView> {
               padding: EdgeInsets.only( left: 64, right: 64 , top: 10.0, bottom: 8.0),
               child: Text(
                 "Bastion23",
-                style: TextStyle(fontSize: 55.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color.fromARGB(255, 224, 210, 210)),
+                style: TextStyle(fontSize: 45.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color.fromARGB(255, 224, 210, 210)),
               ),
             ),
             Padding(

@@ -52,7 +52,7 @@ class TopBackSkipView extends StatelessWidget {
         child: Container(
           height: 60,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 16, top: 20),
+            padding: const EdgeInsets.only(left: 8, right: 20, top: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

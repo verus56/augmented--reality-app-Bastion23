@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:wallpaper/utils/colors.dart';
-
+import 'package:wallpaper/Screens/navigation.dart';
 class FavoritesPage extends StatefulWidget {
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
@@ -29,7 +30,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: buildAppBar(),
+   
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -133,27 +134,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 }
 
-AppBar buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Icon(Icons.menu, color: Colors.white),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.all(12.0),
-          child: IconButton(
-            onPressed: () {
-              // Handle search button tap
-            },
-            icon: Icon(Icons.search, color: Colors.white),
-          ),
-        ),
-      ],
-    );
-  }
+
 
 class _GridItem extends StatelessWidget {
   final String imageUrl;

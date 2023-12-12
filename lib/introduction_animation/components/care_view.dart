@@ -95,7 +95,7 @@ class CareView extends StatelessWidget {
                   position: _relaxSecondHalfAnimation,
                   child: Text(
                     "its a new way to explore the bastion 23 musuem",
-                    style: TextStyle(fontSize: 54.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
+                    style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.w700, fontFamily: 'Inter', color: Color(0xFFffffff)),
                   ),
                 ),
               ),

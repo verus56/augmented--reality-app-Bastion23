@@ -120,7 +120,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             borderRadius: BorderRadius.circular(30)
                         ),
                         child: Center(
-                          child:Text("SnapPost",style: GoogleFonts.quicksand(
+                          child:Text("take a picture",style: GoogleFonts.quicksand(
                               letterSpacing: 1,
                               textStyle: TextStyle(color: Colors.white,fontSize: 22,)
                           )
@@ -247,13 +247,13 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ) ,
           Positioned(
-              bottom: 300,left: ScreenWidth /2 - 150,
+              bottom:100 ,left: ScreenWidth /2 - 150,
               child: InkWell(
                 child: Container (
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color(0xFFffffff).withOpacity(1),
+                      color: Color.fromARGB(255, 156, 144, 144).withOpacity(1),
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Padding(
@@ -263,9 +263,9 @@ class _CameraScreenState extends State<CameraScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Post Snap",style: TextStyle(fontSize: 25,),),
+                            Text(" post your beautiful picture",style: TextStyle(fontSize: 15,),),
                             SizedBox(width: 15,),
-                            Icon(Icons.send_rounded,color: Colors.red,size: 30,)
+                            Icon(Icons.send_rounded,color: const Color.fromARGB(255, 34, 19, 14),size: 30,)
                           ],
                         ),
                       ),

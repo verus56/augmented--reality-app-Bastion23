@@ -75,7 +75,7 @@ class MoodDiaryVew extends StatelessWidget {
       child: SlideTransition(
         position: _secondHalfAnimation,
         child: Padding(
-          padding: const EdgeInsets.only(  left: 50, right: 50,  bottom: 100),
+          padding: const EdgeInsets.only(  left: 57, right: 50,  bottom: 100),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

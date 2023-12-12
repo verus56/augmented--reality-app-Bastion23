@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper/Screens/detail_wallpaper.dart';
 
+
 class ImageDetails {
   final String imagePath;
   final String title;
@@ -74,13 +75,13 @@ class HomePage extends StatelessWidget {
     // Add more entries for each image
   ];
   final commonAudioPath1 = "assets/anta-hobi-al-awal-lefqirat.mp3";
-
+   final double menuWidthScale = 0.8;
+    final double scaleY = 1.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   
       extendBodyBehindAppBar: true,
-      appBar: buildAppBar(),
+      
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

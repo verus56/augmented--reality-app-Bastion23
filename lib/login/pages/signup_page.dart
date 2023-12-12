@@ -88,7 +88,7 @@ class _SignupPageState extends State<SignupPage> {
       print('User signed up successfully');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => NavigationPage()),
+        MaterialPageRoute(builder: (BuildContext context) => drawer()),
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); // Close the dialog
@@ -116,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/bg.png"),
+                  image: AssetImage("assets/14.JPG"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -203,55 +203,8 @@ class _SignupPageState extends State<SignupPage> {
                         height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       // or continue with
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Row(
-                          children: const [
-                            Expanded(
-                              child: Divider(
-                                thickness: 0.5,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                'Or continue with',
-                                style: TextStyle(
-                                    color: Colors.white, fontFamily: 'Inter'),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 0.5,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      // google + apple sign in buttons
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // google button
-                          SquareTile(
-                              onTap: () =>
-                                  AuthService().signInWithGoogle(context),
-                              imagePath: 'assets/images/google.png'),
-                          SizedBox(width: 25),
-                          // apple button
-                          SquareTile(
-                              onTap: () {},
-                              imagePath: 'assets/images/apple.png')
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                    
+                            
                       // not a member? register now
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
