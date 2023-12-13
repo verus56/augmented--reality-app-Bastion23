@@ -110,7 +110,6 @@ flutter:
   assets:
     - assets/music/senya.mp3
     - assets/
-    - assets/introduction_animation/
     - assets/images/
     - assets/Model/
     - assets/images/bg.png
