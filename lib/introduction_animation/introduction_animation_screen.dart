@@ -44,7 +44,7 @@ class _IntroductionAnimationScreenState
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/14.JPG'), // Replace with your image path
+            image: AssetImage('assets/11.JPG'), // Replace with your image path
             fit: BoxFit.cover,
           ),
         ),

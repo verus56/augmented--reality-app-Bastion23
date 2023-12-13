@@ -138,7 +138,7 @@ class PostPage extends State<PostScreen> {
                   ElevatedButton(
                     onPressed: () {
                       createPost(captionController.text, imageUrl, currentDate);
-                    
+                       Get.to(social());
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 187, 170, 165),
@@ -206,7 +206,7 @@ void createPost(String caption, String imageUrl, String date) async {
     // Navigate to the social page
    Navigator.pushReplacement(
   context,
-  MaterialPageRoute(builder: (context) => social()), 
+  MaterialPageRoute(builder: (context) => social()), // Replace SocialPage with your actual social page
 );
 
   } catch (e) {
