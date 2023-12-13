@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/navigation.dart';
+import 'package:wallpaper/Screens/social.dart';
 import '/homepage.dart';
 import '/models/startup_post.dart';
 
@@ -137,6 +138,7 @@ class PostPage extends State<PostScreen> {
                   ElevatedButton(
                     onPressed: () {
                       createPost(captionController.text, imageUrl, currentDate);
+                       Get.to(social());
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 187, 170, 165),
@@ -148,6 +150,8 @@ class PostPage extends State<PostScreen> {
                         Text("Post Your Image"),
                         SizedBox(width: 10),
                         if (showLoading) CircularProgressIndicator(),
+
+                        
                       ],
                     ),
                   ),

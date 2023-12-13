@@ -7,7 +7,8 @@ import 'package:wallpaper/Screens/camerapage.dart';
 import 'package:wallpaper/Posts/camera_screen.dart';
 import 'package:wallpaper/Screens/social.dart';
 import 'package:wallpaper/ArtScreen/arhome.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wallpaper/login/pages/login_page.dart';
 
 class drawer extends StatefulWidget {
   const drawer({Key? key});
@@ -18,6 +19,7 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   final zoomDrawerController = ZoomDrawerController();
+   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<String> screenStringTest = ["Home", "Favorites", "AR", "Camera", "Post"];
   List<IconData> screenIconTest = [
     Icons.apps,
@@ -166,7 +168,10 @@ class _drawerState extends State<drawer> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                  onPressed: () async {
+            // Call the logout function here
+            await _logout();
+          },
                     icon: Padding(
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: Icon(
@@ -226,4 +231,22 @@ AppBar buildAppBar() {
     
   );
 }
+
+
+Future<void> _logout() async {
+  try {
+    await _auth.signOut();
+    print("User logged out successfully");
+    
+    // Navigate to the login page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()), // Replace LoginPage with your actual login page
+    );
+  } catch (e) {
+    print("Error logging out: $e");
+    // Handle error, if any
+  }
+}
+
 }
