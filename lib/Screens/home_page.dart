@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
   List<ImageDetails> imageDetailsList = [
     ImageDetails(
       imagePath: "assets/1.jpg",
-      title: "Palace of the Rais (Q'asr Rouy')",
+      title: "Palace of the Rais",
       description:
           "This 16th-century palace is the largest and most impressive of the three.",
     ),
@@ -39,40 +39,59 @@ class HomePage extends StatelessWidget {
     ),
     ImageDetails(
       imagePath: "assets/4.jpg",
-      title: "Title 2",
-      description: "Description for image 2.",
+      title: "Inside architecture",
+      description: "This is an 18th-century ottoman style inside architecture of the roof and windows of the Bastion.",
     ),
     ImageDetails(
       imagePath: "assets/5.jpg",
-      title: "Title 1",
-      description: "Description for image 1.",
+      title: "Lightening inside the Bastion",
+      description: "During the Ottoman ruling it was known to use lanterns and handmade chandeliers that color and shape the lights beautifully around the walls of the Bastion.",
     ),
     ImageDetails(
       imagePath: "assets/6.jpg",
-      title: "Title 2",
-      description: "Description for image 2.",
+      title: "Chandelier",
+      description: "This is an example of the chandeliers used in the Bastion and their play on lights.",
     ),
     ImageDetails(
       imagePath: "assets/7.jpg",
-      title: "Title 1",
-      description: "Description for image 1.",
+      title: "Museum",
+      description: "This is the exhibition of the algerian culture held in the basement of Palace 18, where it showcases the Diffrent dresses worn traditionally by the Algerian men and wormen.",
     ),
     ImageDetails(
-      imagePath: "assets/8.jpg",
-      title: "Title 2",
-      description: "Description for image 2.",
+      imagePath: "assets/10.JPG",
+      title: "Patio (wast eddar)",
+      description: "in the Palace of the Rais (Q' asr Rouy') or Bastion 23, Algiers. Algeria, 16th-18th century.",
     ),
     ImageDetails(
       imagePath: "assets/12.JPG",
-      title: "Title 1",
-      description: "Description for image 1.",
+      title: "House of the Caid",
+      description: "This 17th-century house was home to the military governor of the city",
     ),
     ImageDetails(
-      imagePath: "assets/1.jpg",
-      title: "Title 2",
-      description: "Description for image 2.",
+      imagePath: "assets/11.JPG",
+      title: "Sea view",
+      description: "This is the outside of the Bastion 23 that overlooks the sea with an architecture made to face dangerous threats.",
     ),
-    // Add more entries for each image
+    ImageDetails(
+      imagePath: "assets/16.jpg",
+      title: "Water fountain",
+      description: "This is a water fountain decorating the inside of the 3 palaces of the Bastion 23.",
+    ),
+    ImageDetails(
+      imagePath: "assets/13.JPG",
+      title: "Upper view the Bastion 23",
+      description: "This is the architecture of the Bastion 23 with its overview on the sea, and connection of the 3 palaces with the 6 houses.",
+    ),
+    ImageDetails(
+      imagePath: "assets/14.JPG",
+      title: "Tunnel",
+      description: "This is the tunnel connecting the Three palaces with six houses, completing the build of the Bastion 23.",
+    ),
+    ImageDetails(
+      imagePath: "assets/15.jpg",
+      title: "Halls",
+      description: "This is the Halls of the palaces showcasing the amazing Ottoman art with diffrent types of chandeliers, zellige tilework and mashrabiya screens",
+    ),
   ];
   final commonAudioPath1 = "assets/anta-hobi-al-awal-lefqirat.mp3";
    final double menuWidthScale = 0.8;

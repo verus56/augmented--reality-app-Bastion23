@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +20,7 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   final zoomDrawerController = ZoomDrawerController();
-   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   List<String> screenStringTest = ["Home", "Favorites", "AR", "Camera", "Post"];
   List<IconData> screenIconTest = [
     Icons.apps,
@@ -29,6 +30,56 @@ class _drawerState extends State<drawer> {
     Icons.post_add,
   ];
   int selectedIndex = 0;
+  late String userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID();
+  }
+
+  Future<void> _getUserID() async {
+    User? user = _auth.currentUser;
+    userId = user!.uid;
+  }
+
+  Future<void> _logout() async {
+    try {
+      await _auth.signOut();
+      print("User logged out successfully");
+
+      // Navigate to the login page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LoginPage()), // Replace LoginPage with your actual login page
+      );
+    } catch (e) {
+      print("Error logging out: $e");
+      // Handle error, if any
+    }
+  }
+
+  Future<String> getUserAvatar(String userID) async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userID)
+          .get();
+
+      if (snapshot.exists) {
+        return snapshot.get("Avatar") ??
+            "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+      } else {
+        return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+      }
+    } catch (e) {
+      // Handle any errors that might occur during the data fetching.
+      print("Error fetching username: $e");
+      return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +87,7 @@ class _drawerState extends State<drawer> {
       controller: zoomDrawerController,
       menuBackgroundColor: Color.fromARGB(255, 246, 244, 244),
       shadowLayer1Color: const Color.fromARGB(255, 245, 245, 245),
-      shadowLayer2Color:
-          Color.fromARGB(255, 139, 125, 125).withOpacity(0.3),
+      shadowLayer2Color: Color.fromARGB(255, 139, 125, 125).withOpacity(0.3),
       borderRadius: 50.0,
       showShadow: true,
       mainScreen: _buildMainScreen(context),
@@ -50,11 +100,7 @@ class _drawerState extends State<drawer> {
   Scaffold _buildMainScreen(BuildContext context) {
     return Scaffold(
       drawerEnableOpenDragGesture: true,
-    
       body: _buildBody(selectedIndex),
-      
-      
-  
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) {
@@ -75,7 +121,6 @@ class _drawerState extends State<drawer> {
             icon: Icon(screenIconTest[index]),
             label: screenStringTest[index],
           ),
-
         ),
       ),
     );
@@ -105,16 +150,20 @@ class _drawerState extends State<drawer> {
                   padding: const EdgeInsets.only(left: 15, top: 70),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      CircleAvatar(
-                        foregroundImage: AssetImage("assets/profile.jpg"),
-                        radius: 50,
-                        backgroundColor: Color.fromARGB(255, 82, 81, 86),
-                      ),
+                    children: [
+                      FutureBuilder<String>(
+                          future: getUserAvatar(
+                              userId), // Replace userId with your actual user ID
+                          builder: (context, avatarSnapshot) {
+                            return CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(avatarSnapshot
+                                        .data ??
+                                    "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg"));
+                          }),
                       SizedBox(
                         height: 10,
                       ),
-                      
                     ],
                   ),
                 ),
@@ -168,15 +217,15 @@ class _drawerState extends State<drawer> {
                         ),
                       ),
                     ),
-                  onPressed: () async {
-            // Call the logout function here
-            await _logout();
-          },
+                    onPressed: () async {
+                      // Call the logout function here
+                      await _logout();
+                    },
                     icon: Padding(
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: Icon(
                         Icons.logout,
-                        color:  Colors.black,
+                        color: Colors.black,
                       ),
                     ),
                     label: Padding(
@@ -204,49 +253,26 @@ class _drawerState extends State<drawer> {
         return HomePage();
       case 1:
         return FavoritesPage();
-   
+
       case 2:
-        return  ArHome();
+        return ArHome();
       case 3:
-        return  CameraScreen();
-       case 4:
-        return  social();
-     
-  
-     
+        return CameraScreen();
+      case 4:
+        return social();
+
       default:
         return HomePage();
     }
   }
 
-AppBar buildAppBar() {
-  return AppBar(
-   
-    elevation: 0, // No shadow
-    leading: IconButton(
-      onPressed: () => zoomDrawerController.toggle?.call(),
-      icon: const Icon(Icons.menu),
-    ),
-  
-    
-  );
-}
-
-
-Future<void> _logout() async {
-  try {
-    await _auth.signOut();
-    print("User logged out successfully");
-    
-    // Navigate to the login page
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginPage()), // Replace LoginPage with your actual login page
+  AppBar buildAppBar() {
+    return AppBar(
+      elevation: 0, // No shadow
+      leading: IconButton(
+        onPressed: () => zoomDrawerController.toggle?.call(),
+        icon: const Icon(Icons.menu),
+      ),
     );
-  } catch (e) {
-    print("Error logging out: $e");
-    // Handle error, if any
   }
-}
-
 }

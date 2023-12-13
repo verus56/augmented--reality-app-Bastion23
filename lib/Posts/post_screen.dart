@@ -138,7 +138,7 @@ class PostPage extends State<PostScreen> {
                   ElevatedButton(
                     onPressed: () {
                       createPost(captionController.text, imageUrl, currentDate);
-                       Get.to(social());
+                    
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 187, 170, 165),
@@ -175,38 +175,43 @@ class PostPage extends State<PostScreen> {
     }
   }
 
-  void createPost(String caption, String imageUrl, String date) async {
-    if (imageUrl == '' || imageUrl == null) {
-      imageUrl = widget.capturedImage;
-    }
-    try {
-      // Upload image to Firebase Storage
-      String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference storageReference =
-          FirebaseStorage.instance.ref().child("images/$imageFileName");
-      UploadTask uploadTask = storageReference.putFile(File(imageUrl));
-
-      await uploadTask.whenComplete(() async {
-        // Get the URL of the uploaded image
-        imageUrl = await storageReference.getDownloadURL();
-      });
-
-      // Create a new document in Firestore
-      DocumentReference postDocRef =
-          FirebaseFirestore.instance.collection("posts").doc();
-
-      await postDocRef.set({
-        "caption": caption,
-        "imageUrl": imageUrl,
-        "timeStamp": date,
-        "likes": 0,
-        "userId": user.uid,
-      });
-
-      Get.to(pagen());
-    } catch (e) {
-      print(e.toString());
-      print("Cannot make it !!!");
-    }
+void createPost(String caption, String imageUrl, String date) async {
+  if (imageUrl == '' || imageUrl == null) {
+    imageUrl = widget.capturedImage;
   }
+  try {
+    // Upload image to Firebase Storage
+    String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference storageReference =
+        FirebaseStorage.instance.ref().child("images/$imageFileName");
+    UploadTask uploadTask = storageReference.putFile(File(imageUrl));
+
+    await uploadTask.whenComplete(() async {
+      // Get the URL of the uploaded image
+      imageUrl = await storageReference.getDownloadURL();
+    });
+
+    // Create a new document in Firestore
+    DocumentReference postDocRef =
+        FirebaseFirestore.instance.collection("posts").doc();
+
+    await postDocRef.set({
+      "caption": caption,
+      "imageUrl": imageUrl,
+      "timeStamp": date,
+      "likes": 0,
+      "userId": user.uid,
+    });
+
+    // Navigate to the social page
+   Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (context) => social()), 
+);
+
+  } catch (e) {
+    print(e.toString());
+
+  }
+}
 }
