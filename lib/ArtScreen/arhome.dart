@@ -5,6 +5,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import '/ArtScreen/arthem.dart';
 
+import '/ArtScreen/Qrcode.dart'; // Import your existing ArCoreApp widget
+
+import '/ArtScreen/artlistview.dart';
+import '/ArtScreen/artdata.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import '/ArtScreen/arthem.dart';
+
+import '/ArtScreen/Qrcode.dart'; // Import your existing QRCodeScanner widget
+
 class ArHome extends StatefulWidget {
   @override
   _ArHomeState createState() => _ArHomeState();
@@ -36,7 +47,6 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
     super.dispose();
   }
 
- 
   Widget getAppBarUI(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -61,23 +71,24 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
         ),
         child: Row(
           children: <Widget>[
-            Expanded(child : Center(
-              child: Text(
-                ' Bation 23 AR models',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 25,
+            Expanded(
+              child: Center(
+                child: Text(
+                  ' Bation 23 AR models',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 25,
+                  ),
                 ),
               ),
-                 ),     ),
+            ),
             Container(
-              width: 80,  // Adjusted width to a reasonable value
+              width: 80, // Adjusted width to a reasonable value
               height: 60,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-               
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -135,7 +146,7 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
                           return <Widget>[
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
+                                    (BuildContext context, int index) {
                                   return Column(
                                     children: <Widget>[],
                                   );
@@ -154,7 +165,7 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
                             itemBuilder: (BuildContext context, int index) {
                               final int count = homeList.length > 10 ? 10 : homeList.length;
                               final Animation<double> animation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
                                   parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn),
@@ -175,6 +186,26 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+              // Add a FloatingActionButton for QR code scanning
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      // Navigate to QRCodeScanner widget when the button is pressed
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QRCodeScanner(),
+                        ),
+                      );
+                    },
+                    tooltip: 'Scan QR Code',
+                    child: Icon(Icons.qr_code_scanner),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -185,8 +216,8 @@ class _ArHomeState extends State<ArHome> with TickerProviderStateMixin {
 
 class ContestTabHeader extends SliverPersistentHeaderDelegate {
   ContestTabHeader(
-    this.searchUI,
-  );
+      this.searchUI,
+      );
   final Widget searchUI;
 
   @override

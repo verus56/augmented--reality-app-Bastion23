@@ -9,15 +9,8 @@ class ArCoreApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter AR',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-
-
       home: ModelViewer(
         src: modelPath,
-        alt: "A 3D model of an Astronaut",
         ar: true,
         autoRotate: true,
         cameraControls: true,
