@@ -30,7 +30,7 @@ class _drawerState extends State<drawer> {
     Icons.post_add,
   ];
   int selectedIndex = 0;
-  late String userId;
+  late String userId = ''; // Initialize with an empty string
 
   @override
   void initState() {
@@ -40,7 +40,15 @@ class _drawerState extends State<drawer> {
 
   Future<void> _getUserID() async {
     User? user = _auth.currentUser;
-    userId = user!.uid;
+    if (user != null) {
+      setState(() {
+        userId = user.uid;
+      });
+    } else {
+      setState(() {
+        userId = '';
+      });
+    }
   }
 
   Future<void> _logout() async {
@@ -48,16 +56,14 @@ class _drawerState extends State<drawer> {
       await _auth.signOut();
       print("User logged out successfully");
 
-      // Navigate to the login page
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                LoginPage()), // Replace LoginPage with your actual login page
+          builder: (context) => LoginPage(),
+        ),
       );
     } catch (e) {
       print("Error logging out: $e");
-      // Handle error, if any
     }
   }
 
@@ -75,7 +81,6 @@ class _drawerState extends State<drawer> {
         return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
       }
     } catch (e) {
-      // Handle any errors that might occur during the data fetching.
       print("Error fetching username: $e");
       return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
     }
@@ -117,7 +122,7 @@ class _drawerState extends State<drawer> {
         showSelectedLabels: true,
         items: List.generate(
           screenStringTest.length,
-          (index) => BottomNavigationBarItem(
+              (index) => BottomNavigationBarItem(
             icon: Icon(screenIconTest[index]),
             label: screenStringTest[index],
           ),
@@ -152,15 +157,17 @@ class _drawerState extends State<drawer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FutureBuilder<String>(
-                          future: getUserAvatar(
-                              userId), // Replace userId with your actual user ID
-                          builder: (context, avatarSnapshot) {
-                            return CircleAvatar(
-                                radius: 50,
-                                backgroundImage: NetworkImage(avatarSnapshot
-                                        .data ??
-                                    "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg"));
-                          }),
+                        future: getUserAvatar(userId),
+                        builder: (context, avatarSnapshot) {
+                          return CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                              avatarSnapshot.data ??
+                                  "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg",
+                            ),
+                          );
+                        },
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -181,7 +188,7 @@ class _drawerState extends State<drawer> {
                           zoomDrawerController.toggle?.call();
                         },
                         splashColor:
-                            Theme.of(context).primaryColor.withOpacity(0.5),
+                        Theme.of(context).primaryColor.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(20),
                         child: ListTile(
                           leading: Icon(
@@ -192,9 +199,10 @@ class _drawerState extends State<drawer> {
                           title: Text(
                             screenStringTest[index],
                             style: const TextStyle(
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black),
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
@@ -206,10 +214,13 @@ class _drawerState extends State<drawer> {
                   child: TextButton.icon(
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(
-                          Theme.of(context).primaryColor.withOpacity(0.5)),
+                        Theme.of(context).primaryColor.withOpacity(0.5),
+                      ),
                       side: MaterialStateProperty.all(
                         BorderSide(
-                            color: Colors.black.withOpacity(0.5), width: 1.5),
+                          color: Colors.black.withOpacity(0.5),
+                          width: 1.5,
+                        ),
                       ),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
@@ -218,7 +229,6 @@ class _drawerState extends State<drawer> {
                       ),
                     ),
                     onPressed: () async {
-                      // Call the logout function here
                       await _logout();
                     },
                     icon: Padding(
@@ -230,7 +240,9 @@ class _drawerState extends State<drawer> {
                     ),
                     label: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
                       child: Text(
                         "Logout",
                         style: TextStyle(color: Colors.black),
@@ -247,20 +259,17 @@ class _drawerState extends State<drawer> {
   }
 
   Widget _buildBody(int selectedIndex) {
-    // Replace this switch statement with the specific pages you want to display
     switch (selectedIndex) {
       case 0:
         return HomePage();
       case 1:
         return FavoritesPage();
-
       case 2:
         return ArHome();
       case 3:
         return CameraScreen();
       case 4:
         return social();
-
       default:
         return HomePage();
     }
@@ -268,7 +277,7 @@ class _drawerState extends State<drawer> {
 
   AppBar buildAppBar() {
     return AppBar(
-      elevation: 0, // No shadow
+      elevation: 0,
       leading: IconButton(
         onPressed: () => zoomDrawerController.toggle?.call(),
         icon: const Icon(Icons.menu),

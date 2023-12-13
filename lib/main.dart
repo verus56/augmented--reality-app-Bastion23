@@ -9,7 +9,6 @@ import 'Screens/home_page.dart';
 import 'introduction_animation/introduction_animation_screen.dart';
 
 late List<CameraDescription> cameras;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
@@ -31,11 +30,17 @@ class MyApp extends StatelessWidget {
           future: FirebaseAuth.instance.signInAnonymously(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              // User is already signed in
-              return drawer();
+              // Check if the user is signed in
+              if (snapshot.hasError || snapshot.data?.user == null) {
+                // User is not signed in, show introduction animation
+                return IntroductionAnimationScreen();
+              } else {
+                // User is signed in, show the main navigation screen
+                return drawer();
+              }
             } else {
-              // Loading or error state, show introduction animation
-              return IntroductionAnimationScreen();
+              // Loading state, show loading indicator or another splash screen
+              return CircularProgressIndicator();
             }
           },
         ),
