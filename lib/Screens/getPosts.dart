@@ -181,6 +181,10 @@ class _getPostsState extends State<getPosts> {
                     ],
                   ),
                 ),
+                Text(
+                  '${data["likes"]} likes',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: FutureBuilder<String>(

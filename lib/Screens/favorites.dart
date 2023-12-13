@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:wallpaper/main.dart';
 import 'package:wallpaper/utils/colors.dart';
 import 'package:wallpaper/Screens/navigation.dart';
 class FavoritesPage extends StatefulWidget {
@@ -102,7 +103,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       stream: favoritesCollection.snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return CoolCircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Center(
             child: Text('Error: ${snapshot.error}'),

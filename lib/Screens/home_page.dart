@@ -189,7 +189,7 @@ class HomePage extends StatelessWidget {
                     child: FadeInImage(
                       image: AssetImage(imageDetailsList[i].imagePath),
                       fit: BoxFit.cover,
-                      placeholder: const AssetImage("assets/images.png"),
+                      placeholder: const AssetImage("assets/Solid_white.png"),
                     ),
                   ),
                 ),

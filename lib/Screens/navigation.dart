@@ -67,7 +67,7 @@ class _drawerState extends State<drawer> {
     }
   }
 
-  Future<String> getUserAvatar(String userID) async {
+ Future<String> getUserAvatar(String userID) async {
     try {
       final snapshot = await FirebaseFirestore.instance
           .collection("users")
@@ -75,14 +75,15 @@ class _drawerState extends State<drawer> {
           .get();
 
       if (snapshot.exists) {
-        return snapshot.get("Avatar") ??
-            "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+        return snapshot.get("avatar") ??
+            "https://i.postimg.cc/dQ66DLMg/user-icon-149851.png";
       } else {
-        return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+        return "https://i.postimg.cc/dQ66DLMg/user-icon-149851.png";
       }
     } catch (e) {
-      print("Error fetching username: $e");
-      return "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg";
+      // Handle any errors that might occur during the data fetching.
+      print("Error fetching avatar: $e");
+      return "https://i.postimg.cc/dQ66DLMg/user-icon-149851.png";
     }
   }
 
@@ -133,7 +134,7 @@ class _drawerState extends State<drawer> {
 
   Container _menuScreen(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.brown.shade100,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 35),
         child: Column(
@@ -157,17 +158,22 @@ class _drawerState extends State<drawer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FutureBuilder<String>(
-                        future: getUserAvatar(userId),
-                        builder: (context, avatarSnapshot) {
-                          return CircleAvatar(
-                            radius: 50,
-                            backgroundImage: NetworkImage(
-                              avatarSnapshot.data ??
-                                  "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg",
-                            ),
-                          );
-                        },
-                      ),
+                        future:getUserAvatar(userId),
+                            builder: (context, avatarSnapshot) {
+                              return CircleAvatar(
+                                radius:40,
+                                backgroundImage: avatarSnapshot.hasData
+                                    ? Image.network(
+                                        avatarSnapshot.data ?? "",
+                                        fit: BoxFit.cover,
+                                      ).image
+                                    : Image.network(
+                                        "https://cdn.britannica.com/34/3034-050-077DE27D/Flag-Algeria.jpg",
+                                        fit: BoxFit.cover,
+                                      ).image,
+                              );
+                            },
+                          ),
                       SizedBox(
                         height: 10,
                       ),

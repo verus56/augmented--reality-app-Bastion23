@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wallpaper/Screens/home_page.dart';
 import 'package:wallpaper/Screens/navigation.dart';
 import 'package:wallpaper/Screens/social.dart';
+import 'package:wallpaper/main.dart';
 import '/homepage.dart';
 import '/models/startup_post.dart';
 
@@ -59,7 +60,12 @@ class PostPage extends State<PostScreen> {
     return WillPopScope(
       onWillPop: () async {
         // Handle back button press
-        Navigator.pop(context);
+        Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>drawer(),
+      ),
+    );
         return false;
       },
       child: Scaffold(
@@ -138,7 +144,7 @@ class PostPage extends State<PostScreen> {
                   ElevatedButton(
                     onPressed: () {
                       createPost(captionController.text, imageUrl, currentDate);
-                       Get.to(social());
+                   
                     },
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 187, 170, 165),
@@ -149,7 +155,7 @@ class PostPage extends State<PostScreen> {
                       children: [
                         Text("Post Your Image"),
                         SizedBox(width: 10),
-                        if (showLoading) CircularProgressIndicator(),
+                        if (showLoading) CoolCircularProgressIndicator(),
 
                         
                       ],
@@ -203,11 +209,7 @@ void createPost(String caption, String imageUrl, String date) async {
       "userId": user.uid,
     });
 
-    // Navigate to the social page
-   Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(builder: (context) => social()), // Replace SocialPage with your actual social page
-);
+  
 
   } catch (e) {
     print(e.toString());
