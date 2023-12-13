@@ -1,4 +1,4 @@
-import '/controllers/database_controller.dart';
+
 import '/models/startup_post.dart';
 
 
@@ -72,39 +72,7 @@ class _stateExampleState extends State<pagen> {
              ],
           )
         ),
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 50,
-        index: currentIndex,
-        backgroundColor: Colors.grey.shade200,
-        color: Colors.white,
-        animationDuration: Duration(milliseconds: 300),
-
-        items: const [
-          Icon(
-            Icons.home,
-            color:Colors.black,
-            size: 35,
-          ),
-          Icon(
-            Icons.add,
-            color:Colors.black,
-            size: 40,
-          ),
-          Icon(
-            Icons.person,
-            color:Colors.black,
-            size: 35,
-
-          ),
-        ],
-        onTap: (index){
-          //pageController.animateToPage(index, duration:Duration(milliseconds: 500), curve: Curves.ease);
-          setState(() {
-            currentIndex = index;
-          });
-        },
-      ),
-    );
+      );
   }
 }
 
