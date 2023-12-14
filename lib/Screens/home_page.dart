@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
     ),
     ImageDetails(
       imagePath: "assets/7.jpg",
-      title: "Museum",
+      title: "",
       description: "This is the exhibition of the algerian culture held in the basement of Palace 18, where it showcases the Diffrent dresses worn traditionally by the Algerian men and wormen.",
     ),
     ImageDetails(

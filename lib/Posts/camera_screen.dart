@@ -263,7 +263,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(" post your beautiful picture",style: TextStyle(fontSize: 15,),),
+                            Text(" post your  picture",style: TextStyle(fontSize: 15,),),
                             SizedBox(width: 15,),
                             Icon(Icons.send_rounded,color: const Color.fromARGB(255, 34, 19, 14),size: 30,)
                           ],

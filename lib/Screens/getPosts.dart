@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:like_button/like_button.dart';
+import 'package:wallpaper/main.dart';
 
 class getPosts extends StatefulWidget {
   final String documentID;
@@ -135,7 +136,7 @@ class _getPostsState extends State<getPosts> {
                         ),
                       ),
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                        CoolCircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                     onDoubleTap: () {
@@ -180,10 +181,6 @@ class _getPostsState extends State<getPosts> {
                       Icon(Icons.bookmark),
                     ],
                   ),
-                ),
-                Text(
-                  '${data["likes"]} likes',
-                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
@@ -271,11 +268,7 @@ class _getPostsState extends State<getPosts> {
                 ],
               ),
             ),
-            Text(
-              'likes',
-              //'Liked by ${data["likes"]}',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+         
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: RichText(
