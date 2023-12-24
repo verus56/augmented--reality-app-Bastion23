@@ -184,11 +184,9 @@ Bastion23 is released under the MIT License. Please review our [LICENSE](LICENSE
 
 ## Contact
 For any further queries or feedback, please contact us 
-
+## enjoy
 We hope you enjoy exploring and using Bastion23 as much as we enjoyed creating it!
 
 © 2023 Bastion23 Team. All Rights Reserved.
 
 
-
-Feel free to use this version or modify it to suit your needs!
