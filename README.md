@@ -35,8 +35,8 @@ Bastion23 boasts a myriad of features that make the AR experience intuitive and 
 ### Prerequisites
 Before diving into the world of Bastion23, make sure you have the following set up:
 
-- Flutter (version X.X.X or higher recommended)
-- Dart (version X.X.X or higher recommended)
+- Flutter (version 3.3 or higher recommended)
+- Dart (version 3.2 or higher recommended)
 - Android Studio or Visual Studio Code with Flutter and Dart plugins
 - A Firebase account with a project set up for Android/iOS
 
