@@ -105,7 +105,78 @@ After installation, explore various features of Bastion23:
      └── main.dart            # User auth checker. 
 ```
 
+## Project Details
+
+### Home Screen
+Welcoming interface introducing Palais des Rais.
+Quick access to Explore, Scan, Favorites, and User Profile.
+
+### Explore Screen
+List of exhibits with filters for categories/themes.
+Brief descriptions with an option for augmented reality exploration.
+
+### Scan Screen
+Camera interface for QR code scanning.
+Real-time feedback and instructions.
+Transition to AR mode for 3D models or additional information.
+
+### Favorites Screen
+Display saved photos and favorited exhibits.
+Organize favorites into albums.
+Quick access to share or download content.
+
+### Profile Screen
+User login and profile info.
+History of visited exhibits or scanned objects.
+Customize user preferences.
+
+### Features
+
+1. **Post Photo:**
+   - Camera interface for photo capture.
+   - Caption, filter, and geotag options.
+   - Social sharing for various platforms.
+
+2. **AR Exploration:**
+   - Augmented reality for 3D exhibit exploration.
+   - Interactive info overlays.
+   - Switch between AR and regular views.
+
+3. **QR Scan Result:**
+   - Detailed exhibit info post QR scan.
+   - Explore related content.
+   - Navigate to exhibit location.
+
+4. **Log In/Sign Up:**
+   - User-friendly forms for Sign Up and Log In.
+   - Password recovery and security features.
+   - Third-party account login (Google, Facebook).
+
+5. **Favorites Management:**
+   - View, organize, and delete favorited content.
+   - Create and manage custom collections.
+   - Quick actions for sharing and downloading.
+
+6. **Download Images:**
+   - Gallery view of downloaded images.
+   - Manage and delete downloaded content.
+   - Share or set images as wallpaper.
+
+
 ## Screenshots
+
+![Screen 1](https://github.com/verus56/augmented--reality-app-Bastion23/blob/Fin/screen/s.png)
+
+
+![Screen 2](https://github.com/verus56/augmented--reality-app-Bastion23/blob/Fin/screen/s2.png)
+![Screen 2](https://github.com/verus56/augmented--reality-app-Bastion23/blob/Fin/screen/s3.png)
+![Screen 2](https://github.com/verus56/augmented--reality-app-Bastion23/blob/Fin/screen/s4.png)
+
+
+<!-- Add more screenshots as needed -->
+
+
+## Project Detail
 
 ## Contributing
 We welcome contributions from the community. If you wish to contribute to Bastion23, please review our [CONTRIBUTING.md](CONTRIBUTING.md) document for guidelines on how to proceed.
