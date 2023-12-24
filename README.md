@@ -4,7 +4,7 @@
 ## Introduction
 Welcome to Bastion23, the cutting-edge augmented reality application that seamlessly integrates the virtual and physical worlds. Built on Flutter and Firebase, Bastion23 delivers an unparalleled AR experience, enabling users to interact with digital elements overlaid onto their real-world surroundings. From educational tools to entertainment and social interaction, Bastion23 is designed to captivate, engage, and amaze.
 
-
+<p align="center"><img src="https://socialify.git.ci/verus56/augmented--reality-app-Bastion23/image?forks=1&amp;issues=1&amp;language=1&amp;name=1&amp;owner=1&amp;pulls=1&amp;stargazers=1&amp;theme=Auto" alt="project-image"></p>
 
 ## Features
 Bastion23 boasts a myriad of features that make the AR experience intuitive and fascinating:
