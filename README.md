@@ -81,7 +81,7 @@ After installation, explore various features of Bastion23:
  |    
  ├── lib
      ├── Post                  
-     |   ├── camera   # Multi language helper
+     |   ├── camera   
      |   ├── post
      |
      ├── models                  
@@ -176,8 +176,6 @@ Customize user preferences.
 <!-- Add more screenshots as needed -->
 
 
-## Project Detail
-
 ## Contributing
 We welcome contributions from the community. If you wish to contribute to Bastion23, please review our [CONTRIBUTING.md](CONTRIBUTING.md) document for guidelines on how to proceed.
 
@@ -191,8 +189,6 @@ We hope you enjoy exploring and using Bastion23 as much as we enjoyed creating i
 
 © 2023 Bastion23 Team. All Rights Reserved.
 
-```vbnet
-' Your VB.NET code here
-```
+
 
 Feel free to use this version or modify it to suit your needs!
