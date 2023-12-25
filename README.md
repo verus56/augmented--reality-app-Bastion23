@@ -1,5 +1,4 @@
 
-https://github.com/verus56/augmented--reality-app-Bastion23/assets/99986124/d0cb2c7c-389c-4d75-9eec-ff19a2bb4865
 
 # Bastion23 Augmented Reality App
 
