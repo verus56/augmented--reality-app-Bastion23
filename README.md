@@ -174,7 +174,8 @@ Customize user preferences.
 ![Screen 2](https://github.com/verus56/augmented--reality-app-Bastion23/blob/Fin/screen/s4.png)
 
 
-## video
+## Video Demo
+
 
 [Watch the Video Demo](https://github.com/verus56/augmented--reality-app-Bastion23/assets/99986124/14c1ae22-0493-4426-abb9-a2d53d6a7fa8
 )
