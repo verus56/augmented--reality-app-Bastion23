@@ -176,8 +176,8 @@ Customize user preferences.
 
 ## video
 
-
-https://github.com/verus56/augmented--reality-app-Bastion23/assets/99986124/14c1ae22-0493-4426-abb9-a2d53d6a7fa8
+[Watch the Video Demo](https://github.com/verus56/augmented--reality-app-Bastion23/assets/99986124/14c1ae22-0493-4426-abb9-a2d53d6a7fa8
+)
 
 
 
