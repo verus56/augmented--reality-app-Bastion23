@@ -46,7 +46,7 @@ To install Bastion23 on your local development machine, follow these instruction
 
 ```bash
 # Clone the Bastion23 repository from GitHub
-git clone https://github.com/yourusername/bastion23.git
+git clone https://github.com/verus56/augmented--reality-app-Bastion23
 
 # Change directory into the cloned repository
 cd bastion23
